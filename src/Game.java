@@ -84,11 +84,11 @@ public class Game extends JPanel implements ActionListener {
             int key = e.getKeyCode();
 
             if (key == KeyEvent.VK_A) {
-                move = 3;
+                move = 2;
             }
 
             if (key == KeyEvent.VK_D) {
-                move = -3;
+                move = -2;
             }
         }
 
