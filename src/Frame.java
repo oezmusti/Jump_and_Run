@@ -12,15 +12,30 @@ public class Frame extends JFrame implements ActionListener {
 
     public static void main(String[] args) {
 
+        /*
+         *Frame wird mit den definierten Parametern erstellt
+         * Name: Jum and Run
+         * Fensterweite: 400
+         * Fensterhöhe 400
+         *
+         */
         Frame frame = new Frame("Jump and Run");//Framename
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Damit Exit funktioniert
         frame.setSize(400, 400);
-
+        frame.setLocationRelativeTo(null); //Positionierung des Fensters in der Mitte des Bildschierms
         frame.setLayout(null); //Damit kein Vorgefertigtes Layout angewendet werden kann
         frame.setVisible(true);
 
     }
 
+    /*
+     *Frameinhalte
+     *
+     * Hier wrden die Frameinhalte für das Startfenster definiert.
+     * Zurzeiit bestehe diese aus 3 Schasltflächen.
+     * Unter andeem werden hier die Positionen und die Propositionen definiert.
+     *
+     */
     public Frame(String title){
         super(title);
 
@@ -41,8 +56,16 @@ public class Frame extends JFrame implements ActionListener {
 
     }
 
+    /*
+    *Buttonfunktionen
+    *
+    * Hier wird durch den ActionListener funktionen ausfgelöst,
+    *  die beim Drücken der jeweiligen Schaltföche ausgeführt werden
+    */
+    //Steuerung der Buttons
     public void actionPerformed(ActionEvent event){
         if (event.getSource() == startGame){
+            setVisible(false);
             game();
         }
 
@@ -56,10 +79,17 @@ public class Frame extends JFrame implements ActionListener {
 
     }
 
+    /*
+     * Initialisierung des Spielfensters
+     *
+     * Hier werden die Daten f+r das Spielfenster festgelegt.
+     * Ansschließend wird durch die game.add(new Game()); das Spiel geladen
+     */
     public static void game(){
         JFrame game = new JFrame();
         game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         game.setSize(960, 540);
+        game.setLocationRelativeTo(null); //Positionierung des Fenseters in der Mitte
         game.setVisible(true);
         game.add(new Game());
 

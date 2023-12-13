@@ -23,7 +23,7 @@ public class Game extends JPanel implements ActionListener {
     public Game() {
         move = 0;
         nx = 0;
-        nx2 = 960;
+        nx2 = 930;
 
         setFocusable(true);
         ImageIcon image = new ImageIcon("src\\assets\\Hintergruind_NEU.jpeg");
@@ -47,9 +47,10 @@ public class Game extends JPanel implements ActionListener {
     protected void paintComponent(Graphics graphic) {
         super.paintComponent(graphic);
         Graphics2D g2d = (Graphics2D) graphic;
-        g2d.drawImage(img, xImg, 0, getWidth(), getHeight(), this);
 
-        if(getXImg() == 960 + (anzahl * 1920)) {
+
+
+        if(getXImg() == 930 + (anzahl * 1920)) {
             anzahl += 1;
             nx = 0;
         }
@@ -58,11 +59,10 @@ public class Game extends JPanel implements ActionListener {
             nx2 = 0;
         }
 
-        if(getXImg() >= 510){
-            g2d.drawImage(img, 960-nx, 0, getWidth(), getHeight(), this);
+        if(getXImg() >= 930){
+            g2d.drawImage(img, 930-nx, 0, getWidth(), getHeight(), this);
         }
-        g2d.drawImage(img, 960-nx2, 0, getWidth(), getHeight(), this);
-
+        g2d.drawImage(img, 930-nx2, 0, getWidth(), getHeight(), this);
 
     }
 
@@ -83,12 +83,16 @@ public class Game extends JPanel implements ActionListener {
         public void keyPressed(KeyEvent e) {
             int key = e.getKeyCode();
 
-            if (key == KeyEvent.VK_A) {
-                move = 2;
+            if (key == KeyEvent.VK_D) {
+                move = 5;
             }
 
-            if (key == KeyEvent.VK_D) {
-                move = -2;
+            if (key == KeyEvent.VK_A) {
+                move = -5;
+            }
+
+            if(key == KeyEvent.VK_ESCAPE){
+                System.exit(0);
             }
         }
 
