@@ -30,7 +30,7 @@ public class Game extends JPanel implements ActionListener {
         img = image.getImage();
         addKeyListener(new AL());
 
-        // Setzen Sie die Größe des Panels auf die Größe des Fensters
+        // Größe des Panels auf die Größe des Fensters
         setPreferredSize(new Dimension(800, 600));
 
         // Damit isch der Konstruktor selbst nochmal aufruft
