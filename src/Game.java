@@ -12,6 +12,7 @@ import javax.swing.Timer;
 
 public class Game extends JPanel implements ActionListener {
 
+    //Variablen
     private Image img;
     private Timer time;
     private int xImg;
@@ -23,7 +24,7 @@ public class Game extends JPanel implements ActionListener {
     public Game() {
         move = 0;
         nx = 0;
-        nx2 = 930;
+        nx2 = 1080;
 
         setFocusable(true);
         ImageIcon image = new ImageIcon("src\\assets\\Hintergruind_NEU.jpeg");
@@ -50,7 +51,7 @@ public class Game extends JPanel implements ActionListener {
 
 
 
-        if(getXImg() == 930 + (anzahl * 1920)) {
+        if(getXImg() == 1080 + (anzahl * 1920)) {
             anzahl += 1;
             nx = 0;
         }
@@ -59,7 +60,7 @@ public class Game extends JPanel implements ActionListener {
             nx2 = 0;
         }
 
-        if(getXImg() >= 930){
+        if(getXImg() >= 1080){
             g2d.drawImage(img, 930-nx, 0, getWidth(), getHeight(), this);
         }
         g2d.drawImage(img, 930-nx2, 0, getWidth(), getHeight(), this);
