@@ -16,7 +16,7 @@ public class Game extends JPanel implements ActionListener {
     private Image img;
     private Image playerImg;
     private int left;
-    private int player_Y = 235;
+    private int player_Y = 400;
 
     private Timer time;
     private int xImg;
