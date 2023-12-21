@@ -14,12 +14,18 @@ public class Game extends JPanel implements ActionListener {
 
     //Variablen
     private Image img;
+    private Image playerImg;
+    private int left;
+    private int player_Y = 235;
+
     private Timer time;
     private int xImg;
     private int move;
     private int nx, nx2;
     private int anzahl = 0;
     private int anzahl2 = 0;
+    private Movement movement;
+    private Jump jump;
 
     public Game() {
         move = 0;
@@ -27,9 +33,20 @@ public class Game extends JPanel implements ActionListener {
         nx2 = 1080;
 
         setFocusable(true);
-        ImageIcon image = new ImageIcon("src\\assets\\Hintergruind_NEU.jpeg");
+        //Background Image Pfad
+        ImageIcon image = new ImageIcon("src\\assets\\BackgroundImage.png");
         img = image.getImage();
-        addKeyListener(new AL());
+
+        //Player Image Pfad
+        ImageIcon player = new ImageIcon("src\\assets\\Charakter-stehend.png");
+        playerImg = player.getImage();
+
+        // Bekantmachung der Klasse Movement
+        movement = new Movement();
+        jump = new Jump();
+
+        addKeyListener(movement);
+        //addKeyListener(new AL());
 
         // Größe des Panels auf die Größe des Fensters
         setPreferredSize(new Dimension(800, 600));
@@ -41,6 +58,7 @@ public class Game extends JPanel implements ActionListener {
 
     public void actionPerformed(ActionEvent e) {
         move();
+        player_Y = jump.jumpPosition;
         repaint();
     }
 
@@ -48,8 +66,6 @@ public class Game extends JPanel implements ActionListener {
     protected void paintComponent(Graphics graphic) {
         super.paintComponent(graphic);
         Graphics2D g2d = (Graphics2D) graphic;
-
-
 
         if(getXImg() == 1080 + (anzahl * 1920)) {
             anzahl += 1;
@@ -65,6 +81,7 @@ public class Game extends JPanel implements ActionListener {
         }
         g2d.drawImage(img, 930-nx2, 0, getWidth(), getHeight(), this);
 
+        g2d.drawImage(playerImg, left, player_Y,64,64, null);
     }
 
     public int getXImg(){
@@ -72,15 +89,31 @@ public class Game extends JPanel implements ActionListener {
     }
 
     public void move() {
-        xImg += move;
-        nx += move;
-        nx2 += move;
+
+        //Damit der Spieler nicht wieder endlos nach Hinten laufen kann
+        if(movement.move != -5){
+            if(left + movement.move <= 175){
+                left += movement.move;
+            }
+            else{
+                xImg += movement.move;
+                nx += movement.move;
+                nx2 += movement.move;
+
+            }
+        }
+        else{
+            if(left + movement.move > 0){
+                left += movement.move;;
+            }
+        }
     }
 
+    @Deprecated
     // Private Klasse eventuell extrahieren
     private class AL extends KeyAdapter {
 
-        @Override
+
         public void keyPressed(KeyEvent e) {
             int key = e.getKeyCode();
 
@@ -97,7 +130,7 @@ public class Game extends JPanel implements ActionListener {
             }
         }
 
-        @Override
+
         public void keyReleased(KeyEvent e) {
             int key = e.getKeyCode();
 
