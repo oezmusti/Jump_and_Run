@@ -56,7 +56,7 @@ public class Game extends JPanel implements ActionListener {
 
         //ResetButton
         resetButton = new JButton("Reset");
-        resetButton.setBounds(10, 10, 80, 30);
+        resetButton.setBounds(600, 0, 80, 30);
         resetButton.addActionListener(this);
         add(resetButton);
     }
@@ -107,7 +107,7 @@ public class Game extends JPanel implements ActionListener {
 
         //Damit der Spieler nicht wieder endlos nach Hinten laufen kann
         if(movement.move != -5){
-            if(left + movement.move <= 175){
+            if(left + movement.move <= 400){
                 left += movement.move;
             }
             else{
