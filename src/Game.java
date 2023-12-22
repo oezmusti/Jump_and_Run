@@ -1,5 +1,4 @@
-import javax.swing.ImageIcon;
-import javax.swing.JPanel;
+import javax.swing.*;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -8,7 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import javax.swing.Timer;
 
 public class Game extends JPanel implements ActionListener {
 
@@ -24,6 +22,7 @@ public class Game extends JPanel implements ActionListener {
     private int nx, nx2;
     private int anzahl = 0;
     private int anzahl2 = 0;
+    private JButton resetButton;
     private Movement movement;
     private Jump jump;
 
@@ -54,12 +53,28 @@ public class Game extends JPanel implements ActionListener {
         // Damit isch der Konstruktor selbst nochmal aufruft
         time = new Timer(5, this);
         time.start();
+
+        //ResetButton
+        resetButton = new JButton("Reset");
+        resetButton.setBounds(10, 10, 80, 30);
+        resetButton.addActionListener(this);
+        add(resetButton);
     }
 
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(ActionEvent event) {
         move();
         player_Y = jump.jumpPosition;
         repaint();
+
+        if(event.getSource() == resetButton){
+            resetGame();
+        }
+    }
+
+    //Funktion die den Reset ausführen soll
+    private void resetGame() {
+        // Reset game logic goes here
+        Frame.game();
     }
 
 

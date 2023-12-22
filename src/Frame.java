@@ -22,7 +22,7 @@ public class Frame extends JFrame implements ActionListener {
          * Fensterhöhe 400
          *
          */
-        Frame frame = new Frame("Jump and Run");//Framename
+        Frame frame = new Frame("Menü");//Framename
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Damit Exit funktioniert
         frame.setSize(400, 400);
         frame.setLocationRelativeTo(null); //Positionierung des Fensters in der Mitte des Bildschierms
@@ -112,7 +112,7 @@ public class Frame extends JFrame implements ActionListener {
      * Ansschließend wird durch die game.add(new Game()); das Spiel geladen
      */
     public static void game(){
-        JFrame game = new JFrame();
+        JFrame game = new JFrame("Jump and Run");
         game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         game.setSize(960, 540);
         game.setLocationRelativeTo(null); //Positionierung des Fenseters in der Mitte
