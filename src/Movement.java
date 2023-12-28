@@ -8,18 +8,22 @@ public class Movement extends KeyAdapter {
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_D) {
+            System.out.println("D wurde gedrückt");
             move = 5;
         }
 
         if (key == KeyEvent.VK_A) {
+            System.out.println("A wurde gedrückt");
             move = -5;
         }
 
         if (key == KeyEvent.VK_SPACE){
+            System.out.println("SPACE wurde gedrückt");
             performJump();
         }
 
         if(key == KeyEvent.VK_ESCAPE){
+            System.out.println("Programm wurde beendet");
             System.exit(0);
         }
     }
@@ -28,6 +32,7 @@ public class Movement extends KeyAdapter {
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_A || key == KeyEvent.VK_D) {
+            //System.out.println("Keine Bewegung nach links oder rechts");
             move = 0;
         }
     }

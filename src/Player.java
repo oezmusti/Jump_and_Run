@@ -8,4 +8,7 @@ public class Player {
         ImageIcon player = new ImageIcon("src\\assets\\Charakter-stehend.png");
         playerImg = player.getImage();
     }
+    public Player(){
+
+    }
 }

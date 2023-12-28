@@ -7,4 +7,8 @@ public class Objects {
     public void paint(){
 
     }
+
+    public Objects(){
+
+    }
 }

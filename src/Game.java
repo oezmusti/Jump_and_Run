@@ -15,6 +15,8 @@ public class Game extends JPanel implements ActionListener {
     private Image playerImg;
     private int left;
     private int player_Y = 400;
+    private int frames = 0;
+    private long lastCheck = 0;
 
     private Timer time;
     private int xImg;
@@ -45,12 +47,11 @@ public class Game extends JPanel implements ActionListener {
         jump = new Jump();
 
         addKeyListener(movement);
-        //addKeyListener(new AL());
 
         // Größe des Panels auf die Größe des Fensters
         setPreferredSize(new Dimension(800, 600));
 
-        // Damit isch der Konstruktor selbst nochmal aufruft
+        // Damit sich der Konstruktor selbst nochmal aufruft
         time = new Timer(5, this);
         time.start();
 
@@ -64,7 +65,7 @@ public class Game extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent event) {
         move();
         player_Y = jump.jumpPosition;
-        repaint();
+        //repaint();
 
         if(event.getSource() == resetButton){
             resetGame();
@@ -97,6 +98,14 @@ public class Game extends JPanel implements ActionListener {
         g2d.drawImage(img, 930-nx2, 0, getWidth(), getHeight(), this);
 
         g2d.drawImage(playerImg, left, player_Y,64,64, null);
+
+        frames++;
+        if(System.currentTimeMillis() - lastCheck >= 1000){
+            lastCheck = System.currentTimeMillis();
+            System.out.println("FPS:" + frames);
+            frames = 0;
+        }
+        repaint();
     }
 
     public int getXImg(){
