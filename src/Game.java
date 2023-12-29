@@ -86,7 +86,7 @@ public class Game extends JPanel implements ActionListener {
         if(getXImg() == 1080 + (anzahl * 1920)) {
             anzahl += 1;
             nx = 0;
-        }
+        } 
         if(getXImg() == 1920 + (anzahl2 * 1920)) {
             anzahl2 += 1;
             nx2 = 0;
