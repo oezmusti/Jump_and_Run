@@ -12,7 +12,7 @@ public class Game extends JPanel implements ActionListener {
 
     //Variablen
     private Image img;
-    private Image playerImg;
+    //private Image playerImg;
     private int left;
     private int player_Y = 400;
     private int frames = 0;
@@ -25,10 +25,18 @@ public class Game extends JPanel implements ActionListener {
     private int anzahl = 0;
     private int anzahl2 = 0;
     private JButton resetButton;
+
+
+    //Assosiations
     private Movement movement;
     private Jump jump;
+    private Player player;
 
     public Game() {
+        movement = new Movement();
+        jump = new Jump();
+        player = new Player();
+
         move = 0;
         nx = 0;
         nx2 = 1080;
@@ -39,12 +47,10 @@ public class Game extends JPanel implements ActionListener {
         img = image.getImage();
 
         //Player Image Pfad
-        ImageIcon player = new ImageIcon("src\\assets\\Charakter-stehend.png");
-        playerImg = player.getImage();
+        //ImageIcon player = new ImageIcon("src\\assets\\Charakter-stehend.png");
+        //playerImg = player.getImage();
 
-        // Bekantmachung der Klasse Movement
-        movement = new Movement();
-        jump = new Jump();
+        player.importPlayerImg();
 
         addKeyListener(movement);
 
@@ -97,15 +103,20 @@ public class Game extends JPanel implements ActionListener {
         }
         g2d.drawImage(img, 930-nx2, 0, getWidth(), getHeight(), this);
 
-        g2d.drawImage(playerImg, left, player_Y,64,64, null);
+        //g2d.drawImage(playerImg, left, player_Y,64,64, null);
+        g2d.drawImage(player.getPlayerImg().getSubimage(0*32, 0*32, 32, 32), left, player_Y,64,64,  null);
 
+        fpsCounter();
+        repaint();
+    }
+
+    private void fpsCounter() {
         frames++;
         if(System.currentTimeMillis() - lastCheck >= 1000){
             lastCheck = System.currentTimeMillis();
             System.out.println("FPS:" + frames);
             frames = 0;
         }
-        repaint();
     }
 
     public int getXImg(){
