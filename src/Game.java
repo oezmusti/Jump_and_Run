@@ -104,7 +104,10 @@ public class Game extends JPanel implements ActionListener {
         g2d.drawImage(img, 930-nx2, 0, getWidth(), getHeight(), this);
 
         //g2d.drawImage(playerImg, left, player_Y,64,64, null);
-        g2d.drawImage(player.getPlayerImg().getSubimage(0*32, 0*32, 32, 32), left, player_Y,64,64,  null);
+
+        //g2d.drawImage(player.getPlayerImg().getSubimage(0*32, 0*32, 32, 32), left, player_Y,64,64,  null);
+        player.updateAniTick();
+        g2d.drawImage(player.goForAni[0][player.aniIndex], left, player_Y,64,64,  null);
 
         fpsCounter();
         repaint();
