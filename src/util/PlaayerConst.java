@@ -21,9 +21,4 @@ public class PlaayerConst {
             }
         }
     }
-
-    public static class Direction{
-        public static final int LEFT = 3;
-        public static final int RIGHT = 0;
-    }
 }

@@ -3,7 +3,6 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import static util.PlaayerConst.PlayerMovings.*;
-import static util.PlaayerConst.Direction.*;
 
 public class Player {
 
@@ -43,10 +42,6 @@ public class Player {
         }
     }
 
-    public void setPlayAct(int playAct){
-        this.playAct = playAct;
-    }
-
     public void updateAniTick(){
         aniTicker++;
         if(aniTicker >= aniSpeed){
@@ -58,10 +53,14 @@ public class Player {
         }
     }
 
+    @Deprecated
     public BufferedImage getPlayerImg() {
         return playerImg;
     }
 
+    public void setPlayAct(int playAct){
+        this.playAct = playAct;
+    }
 
     public Player(){
         updateAniTick();

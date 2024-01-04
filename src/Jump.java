@@ -6,29 +6,21 @@ public class Jump extends Thread{
     static int jumpPosition = basepointY;
     public int jumpTime;
 
-    //Nur für die Bekanthabe wichti
-    public Jump(){
-
-    }
-
     public void run(){
         finished = false;
         jumpTime = 1;
         while(finished == false){
-            Jump();
-
+            doJump();
             try {
                 Thread.sleep(jumpTime);
             }catch (Exception e){
 
             }
         }
-
         highstPoint = false;
-
     }
 
-    public void Jump(){
+    public void doJump(){
         if(highstPoint == false){
             jumpPosition--;
         }
