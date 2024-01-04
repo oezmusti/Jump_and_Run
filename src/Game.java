@@ -7,6 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import static util.PlaayerConst.PlayerMovings.*;
+import static util.PlaayerConst.Direction.*;
 
 public class Game extends JPanel implements ActionListener {
 
@@ -28,12 +30,13 @@ public class Game extends JPanel implements ActionListener {
 
 
     //Assosiations
-    private Movement movement;
+    private Movement movement;;
     private Jump jump;
     private Player player;
+    public int playAct = STAY;
 
     public Game() {
-        movement = new Movement();
+        movement = new Movement(this);
         jump = new Jump();
         player = new Player();
 
@@ -69,6 +72,7 @@ public class Game extends JPanel implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent event) {
+        player.setPlayAct(playAct);
         move();
         player_Y = jump.jumpPosition;
         //repaint();
@@ -107,7 +111,7 @@ public class Game extends JPanel implements ActionListener {
 
         //g2d.drawImage(player.getPlayerImg().getSubimage(0*32, 0*32, 32, 32), left, player_Y,64,64,  null);
         player.updateAniTick();
-        g2d.drawImage(player.goForAni[0][player.aniIndex], left, player_Y,64,64,  null);
+        g2d.drawImage(player.goForAni[playAct][player.aniIndex], left, player_Y,96,96,  null);
 
         fpsCounter();
         repaint();
@@ -124,6 +128,10 @@ public class Game extends JPanel implements ActionListener {
 
     public int getXImg(){
         return xImg;
+    }
+
+    public void setPlayAct(int playAct){
+        this.playAct = playAct;
     }
 
     public void move() {

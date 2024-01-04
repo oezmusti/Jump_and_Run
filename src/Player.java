@@ -2,6 +2,8 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
+import static util.PlaayerConst.PlayerMovings.*;
+import static util.PlaayerConst.Direction.*;
 
 public class Player {
 
@@ -9,13 +11,7 @@ public class Player {
     public int aniTicker, aniIndex;
     public int aniSpeed = 1000;
     public BufferedImage[][] goForAni;
-
-    //Laufanimationstellen
-    public final int STAY = 1;
-    public final int RUNNING_FORWARD = 2;
-    public final int STAY_BACK = 3;
-    public final int RUNNING_BACKWARD = 4;
-
+    private int playAct = STAY;
     public void importPlayerImg() {
 
         InputStream stream = getClass().getClassLoader().getResourceAsStream("assets/Character.png");
@@ -37,19 +33,6 @@ public class Player {
         }
     }
 
-    public int getSpriteAmount(int action){
-
-        switch (action){
-            case RUNNING_FORWARD:
-            case RUNNING_BACKWARD:
-                return 3;
-            case STAY:
-            case STAY_BACK:
-                return 1;
-        }
-        return action;
-    }
-
     public void animation(){
         goForAni = new BufferedImage[4][4];
 
@@ -60,12 +43,16 @@ public class Player {
         }
     }
 
+    public void setPlayAct(int playAct){
+        this.playAct = playAct;
+    }
+
     public void updateAniTick(){
         aniTicker++;
         if(aniTicker >= aniSpeed){
             aniTicker = 0;
             aniIndex++;
-            if (aniIndex >= goForAni.length){
+            if (aniIndex >= GetSpriteAmount(playAct)){
                 aniIndex = 0;
             }
         }
@@ -81,4 +68,5 @@ public class Player {
         importPlayerImg();
         animation();
     }
+
 }
