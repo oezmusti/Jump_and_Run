@@ -5,8 +5,6 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import static util.PlaayerConst.PlayerMovings.*;
 
 public class Game extends JPanel implements ActionListener {
@@ -37,7 +35,7 @@ public class Game extends JPanel implements ActionListener {
     public Game() {
         move = 0;
         nx = 0;
-        nx2 = 1080;
+        nx2 = 960;
 
         initClass();
         setFocusable(true);
@@ -66,7 +64,7 @@ public class Game extends JPanel implements ActionListener {
     }
 
     private void backgroundLoop() {
-        if(xImg == 1080 + (anzahl * 1920)) {
+        if(xImg == 960 + (anzahl * 1920)) {
             anzahl += 1;
             nx = 0;
         }
