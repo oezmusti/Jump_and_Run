@@ -28,7 +28,7 @@ public class Frame extends JFrame implements ActionListener {
          */
         Frame frame = new Frame("Menü");//Framename
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Damit Exit funktioniert
-        frame.setSize(400, 550);
+        frame.setSize(400, 540);
         frame.setLocationRelativeTo(null); //Positionierung des Fensters in der Mitte des Bildschierms
         frame.setLayout(null); //Damit kein Vorgefertigtes Layout angewendet werden kann
         frame.setResizable(false);
@@ -38,7 +38,7 @@ public class Frame extends JFrame implements ActionListener {
 
     public void importPlayerImg() {
 
-        InputStream stream = getClass().getClassLoader().getResourceAsStream("assets/BackgroundImage.png");
+        InputStream stream = getClass().getClassLoader().getResourceAsStream("assets/Start.png");
 
         try {
             if (stream != null) {

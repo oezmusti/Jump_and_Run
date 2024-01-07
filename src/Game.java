@@ -58,7 +58,7 @@ public class Game extends JPanel implements ActionListener {
     }
 
     private void importBackgroundImg() {
-        ImageIcon image = new ImageIcon("src\\assets\\BackgroundImage.png");
+        ImageIcon image = new ImageIcon("src\\assets\\Hintergrund.png");
         img = image.getImage();
         setPreferredSize(new Dimension(800, 600));
     }

@@ -1,9 +1,7 @@
 package Elements;
 
 
- class Bloc implements Object {
+ class Bloc  {
 
-    @Override
-    private String name = "Bloc";
 
 }
