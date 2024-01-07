@@ -1,3 +1,6 @@
+import Elements.Cactus;
+import Elements.Rock;
+
 import javax.swing.*;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -13,7 +16,7 @@ public class Game extends JPanel implements ActionListener {
     private Image img;
     //private Image playerImg;
     private int left;
-    private int player_Y = 400;
+    private int player_Y = 371;
     private int frames = 0;
     private long lastCheck = 0;
 
@@ -30,6 +33,8 @@ public class Game extends JPanel implements ActionListener {
     private Movement movement;;
     private Jump jump;
     private Player player;
+    private Rock rock;
+    private Cactus cactus;
     public int playAct = STAY;
 
     public Game() {
@@ -40,6 +45,7 @@ public class Game extends JPanel implements ActionListener {
         initClass();
         setFocusable(true);
         importBackgroundImg();
+        rock.importElementImage();
         player.importPlayerImg();
         addKeyListener(movement);
         timerRestart();
@@ -55,6 +61,8 @@ public class Game extends JPanel implements ActionListener {
         movement = new Movement(this);
         jump = new Jump();
         player = new Player();
+        rock = new Rock();
+        cactus = new Cactus();
     }
 
     private void importBackgroundImg() {
@@ -64,11 +72,11 @@ public class Game extends JPanel implements ActionListener {
     }
 
     private void backgroundLoop() {
-        if(xImg == 960 + (anzahl * 1920)) {
+        if(xImg >= 960 + (anzahl * 1900)) {
             anzahl += 1;
             nx = 0;
         }
-        if(xImg == 1920 + (anzahl2 * 1920)) {
+        if(xImg >= 1920 + (anzahl2 * 1900)) {
             anzahl2 += 1;
             nx2 = 0;
         }
@@ -79,22 +87,24 @@ public class Game extends JPanel implements ActionListener {
         Graphics2D g2d = (Graphics2D) graphic;
         backgroundLoop();
 
-        //Draw Background
-        if(xImg >= 1080){
-            g2d.drawImage(img, 930-nx, 0, getWidth(), getHeight(), this);
-        }
-        g2d.drawImage(img, 930-nx2, 0, getWidth(), getHeight(), this);
+        // Zeichne den Hintergrund
+        g2d.drawImage(img, 960 - nx, 0, getWidth(), getHeight(), this);
+        g2d.drawImage(img, 960 - nx2, 0, getWidth(), getHeight(), this);
 
-        //Draw Player
+        // Zeichne den Spieler
         player.updateAniTick();
-        g2d.drawImage(player.goForAni[playAct][player.aniIndex], left, player_Y,96,96,  null);
+
+        g2d.drawImage(player.goForAni[playAct][player.aniIndex], left, player_Y, 96, 96, null);
+        g2d.drawImage(cactus.elementImage, 0-nx, 400, 64, 64, null);
+        g2d.drawImage(cactus.elementImage, 960-nx, 400, 64, 64, null);
+
 
         fpsCounter();
         repaint();
     }
 
     private void timerRestart() {
-        time = new Timer(5, this);
+        time = new Timer(15, this);
         time.start();
     }
 

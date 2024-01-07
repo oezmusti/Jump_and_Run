@@ -1,5 +1,44 @@
 package Elements;
 
-public class Cactus extends Object{
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 
+public class Cactus extends Element{
+
+    private String name = "Cactus";
+    public BufferedImage elementImage;
+    @Override
+    public void importElementImage() {
+        InputStream stream = getClass().getClassLoader().getResourceAsStream("assets/Cactus.png");
+
+        try {
+            if (stream != null) {
+                elementImage = ImageIO.read(stream);
+            } else {
+                System.err.println("Bild nicht gefunden: assets/Cactus-stehend.png");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                stream.close();
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+        }
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    public BufferedImage getElementImage(){
+        return elementImage;
+    }
+
+    public Cactus(){
+        importElementImage();
+    }
 }

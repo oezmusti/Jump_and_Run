@@ -8,6 +8,7 @@ public class Movement extends KeyAdapter {
     public int move;
     private Game game;
     private Player player = new Player();
+
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
 

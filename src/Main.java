@@ -4,6 +4,7 @@
  * @verson 
 */
 
+import Elements.Cactus;
 import Elements.Rock;
 
 import javax.swing.*;

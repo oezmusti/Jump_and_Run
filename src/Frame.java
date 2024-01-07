@@ -1,3 +1,5 @@
+import Elements.Rock;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -33,7 +35,6 @@ public class Frame extends JFrame implements ActionListener {
         frame.setLayout(null); //Damit kein Vorgefertigtes Layout angewendet werden kann
         frame.setResizable(false);
         frame.setVisible(true);
-
     }
 
     public void importPlayerImg() {
