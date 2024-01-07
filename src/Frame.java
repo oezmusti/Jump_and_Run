@@ -76,6 +76,11 @@ public class Frame extends JFrame implements ActionListener {
 
         importPlayerImg();
 
+        importJButtons();
+
+    }
+
+    private void importJButtons() {
         startGame = new JButton("Starten");
         startGame.setBounds(120, 170, 160, 40);
         startGame.addActionListener(this);
@@ -99,7 +104,6 @@ public class Frame extends JFrame implements ActionListener {
         finish.addActionListener(this);
         finish.setVisible(true);
         add(finish);
-
     }
 
     /*
