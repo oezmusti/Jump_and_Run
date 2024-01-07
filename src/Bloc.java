@@ -79,7 +79,7 @@ class BildPanel extends JPanel {
     private Image cactusImg;
 
     Random random = new Random();
-    private int randomZahl = random.nextInt(5); // Zahl 0-5
+    private int randomZahl = 0; //random.nextInt(5); // Zahl 0-5
     private int x = 0;
     private int y;
 
