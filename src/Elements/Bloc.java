@@ -1,5 +1,9 @@
 package Elements;
 
-public class Bloc extends Object{
+
+ class Bloc implements Object {
+
+    @Override
+    private String name = "Bloc";
 
 }

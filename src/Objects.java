@@ -3,14 +3,12 @@ import Elements.Rock;
 import java.awt.*;
 
 //Nutzung der Klasse als Interface für jegliche Objekte in dem Spiel
-public abstract class Objects {
-    protected Image object;
-    // Was geeeeeht!!!!!
+public interface Objects {
+    String name = null;
+    Image object = null;
 
-    protected String name;
-    
-    public void paint(){}
 
-    public Objects(){}
+     void importObjectElement();
+
 }
 
