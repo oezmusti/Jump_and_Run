@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class Bloc extends Element{
+public class Blocs extends Element{
     private String name = "Cactus";
     public BufferedImage elementImage;
     @Override
@@ -37,7 +37,7 @@ public class Bloc extends Element{
         return elementImage;
     }
 
-    public Bloc(){
+    public Blocs(){
         importElementImage();
     }
 }

@@ -1,3 +1,4 @@
+import Elements.Blocs;
 import Elements.Cactus;
 import Elements.Rock;
 
@@ -16,7 +17,7 @@ public class Game extends JPanel implements ActionListener {
     private Image img;
     //private Image playerImg;
     private int left;
-    private int player_Y = 371;
+    private int player_Y = 348;
     private int frames = 0;
     private long lastCheck = 0;
 
@@ -35,6 +36,7 @@ public class Game extends JPanel implements ActionListener {
     private Player player;
     private Rock rock;
     private Cactus cactus;
+    private Blocs blocs;
     public int playAct = STAY;
 
     public Game() {
@@ -45,6 +47,7 @@ public class Game extends JPanel implements ActionListener {
         initClass();
         setFocusable(true);
         importBackgroundImg();
+        blocs.importElementImage();
         rock.importElementImage();
         player.importPlayerImg();
         addKeyListener(movement);
@@ -63,6 +66,7 @@ public class Game extends JPanel implements ActionListener {
         player = new Player();
         rock = new Rock();
         cactus = new Cactus();
+        blocs = new Blocs();
     }
 
     private void importBackgroundImg() {
@@ -95,9 +99,12 @@ public class Game extends JPanel implements ActionListener {
         player.updateAniTick();
 
         g2d.drawImage(player.goForAni[playAct][player.aniIndex], left, player_Y, 96, 96, null);
-        g2d.drawImage(cactus.elementImage, 0-nx, 400, 64, 64, null);
-        g2d.drawImage(cactus.elementImage, 960-nx, 400, 64, 64, null);
 
+        //Objekte
+        g2d.drawImage(cactus.elementImage, 0-nx, 377, 64, 64, null);
+        g2d.drawImage(cactus.elementImage, 960-nx, 377, 64, 64, null);
+        g2d.drawImage(cactus.elementImage, 1100-nx, 377, 64, 64, null);
+        g2d.drawImage(blocs.elementImage, 0-nx, 440, 64, 64, null);
 
         fpsCounter();
         repaint();

@@ -1,4 +1,5 @@
 import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,6 +11,7 @@ public class Player {
     public int aniTicker, aniIndex;
     public int aniSpeed = 1000;
     public BufferedImage[][] goForAni;
+    private Rectangle hitBox;
     private int playAct = STAY;
     public void importPlayerImg() {
 
@@ -30,6 +32,10 @@ public class Player {
                 e.printStackTrace();
             }
         }
+    }
+
+    public void initHitBox(){
+        hitBox = new Rectangle();
     }
 
     public void animation(){
