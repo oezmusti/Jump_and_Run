@@ -104,6 +104,7 @@ public class Game extends JPanel implements ActionListener {
         g2d.drawImage(cactus.elementImage, 0-nx, 377, 64, 64, null);
         g2d.drawImage(cactus.elementImage, 960-nx, 377, 64, 64, null);
         g2d.drawImage(cactus.elementImage, 1100-nx, 377, 64, 64, null);
+        g2d.drawImage(cactus.elementImage, 1500-nx, 377, 64, 64, null);
         g2d.drawImage(blocs.elementImage, 0-nx, 440, 64, 64, null);
 
         fpsCounter();
