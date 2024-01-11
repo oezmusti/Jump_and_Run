@@ -2,6 +2,7 @@ import Elements.Blocs;
 import Elements.Cactus;
 import Elements.Rock;
 
+import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.swing.*;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -75,14 +76,31 @@ public class Game extends JPanel implements ActionListener {
         setPreferredSize(new Dimension(800, 600));
     }
 
+    /*
     private void backgroundLoop() {
         if(xImg >= 960 + (anzahl * 1900)) {
             anzahl += 1;
             nx = 0;
+            System.out.println("bGL 1");
         }
         if(xImg >= 1920 + (anzahl2 * 1900)) {
             anzahl2 += 1;
             nx2 = 0;
+            System.out.println("bGL 2");
+        }
+    }
+    */
+
+    private void backgroundLoop() {
+        if(xImg >= 1920 + (anzahl * 1900)) {
+            anzahl += 1;
+            nx = 0;
+            System.out.println("bGL 1");
+        }
+        if(xImg >= 960 + (anzahl2 * 1900)) {
+            anzahl2 += 1;
+            nx2 = 0;
+            System.out.println("bGL 2");
         }
     }
 
@@ -107,7 +125,7 @@ public class Game extends JPanel implements ActionListener {
         g2d.drawImage(cactus.elementImage, 1500-nx, 377, 64, 64, null);
         g2d.drawImage(blocs.elementImage, 0-nx, 440, 64, 64, null);
 
-        fpsCounter();
+        //fpsCounter();
         repaint();
     }
 
@@ -117,15 +135,16 @@ public class Game extends JPanel implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent event) {
+        repaint();
         player.setPlayAct(playAct);
         player_Y = jump.jumpPosition;
-        baclgroundLimit();
+        backgroundLimit();
         if(event.getSource() == resetButton){
             resetGame();
         }
     }
 
-    public void baclgroundLimit() {
+    public void backgroundLimit() {
         //Damit der Spieler nicht wieder endlos nach Hinten laufen kann
         if(movement.move != -5){
             if(left + movement.move <= 400){
@@ -161,6 +180,18 @@ public class Game extends JPanel implements ActionListener {
     //Funktion die den Reset ausführen soll
     private void resetGame() {
         // Reset game logic goes here
-        Frame.game();
+        //Frame.game();
+        gameOver();
+    }
+
+    //Game Over
+    public void gameOver(){
+        JFrame gameOver = new JFrame("Game Over");
+        gameOver.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        gameOver.setSize(540, 440);
+        gameOver.setLocationRelativeTo(null); //Positionierung des Fenseters in der Mitte
+        gameOver.setVisible(true);
+        gameOver.setResizable(false);
+        gameOver.add(new GameOver());
     }
 }

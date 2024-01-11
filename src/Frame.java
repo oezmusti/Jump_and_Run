@@ -1,11 +1,8 @@
-import Elements.Rock;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,8 +16,8 @@ public class Frame extends JFrame implements ActionListener {
     private JButton finish;
     private BufferedImage backgroundImage;
 
-    public static void main(String[] args) {
 
+    public static void main(String[] args) {
         /*
          *Frame wird mit den definierten Parametern erstellt
          * Name: Jum and Run
@@ -35,6 +32,7 @@ public class Frame extends JFrame implements ActionListener {
         frame.setLayout(null); //Damit kein Vorgefertigtes Layout angewendet werden kann
         frame.setResizable(false);
         frame.setVisible(true);
+
     }
 
     public void importPlayerImg() {
@@ -58,10 +56,12 @@ public class Frame extends JFrame implements ActionListener {
         }
     }
 
+    @Override
     public void paint(Graphics g) {
         super.paint(g);
         Graphics2D startGraphic = (Graphics2D) g;
         startGraphic.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+        System.out.println("gezeichnet");
     }
 
     /*
@@ -74,7 +74,6 @@ public class Frame extends JFrame implements ActionListener {
      */
     public Frame(String title){
         super(title);
-
         importPlayerImg();
 
         importJButtons();
@@ -105,6 +104,8 @@ public class Frame extends JFrame implements ActionListener {
         finish.addActionListener(this);
         finish.setVisible(true);
         add(finish);
+
+        System.out.println("Buttons gesetzt");
     }
 
     /*
@@ -143,7 +144,7 @@ public class Frame extends JFrame implements ActionListener {
     public static void game(){
         JFrame game = new JFrame("Jump and Run");
         game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        game.setSize(960, 540);
+        game.setSize(977, 540);
         game.setLocationRelativeTo(null); //Positionierung des Fenseters in der Mitte
         game.setVisible(true);
         game.setResizable(false);
@@ -156,6 +157,24 @@ public class Frame extends JFrame implements ActionListener {
     }
 
     public static void control(){
+         String message = "<html>" +
+                            "<body style='margin:15px; font-size:12px;'>" +
+                                "<p style='color: #3498db;'>Steuerung:</p>" +
+                                "<br>" +
+                                "<p>Nach vorne Laufen:  D</p>" +
+                                "<p>Zurück laufen:  A</p>" +
+                                "<p>Springen:  SPACE</p>" +
+                                "<br>" +
+                                "<p style='color: #3498db;'>So wird gespielt:</p>" +
+                                "<br>" +
+                                "<p>Springe über die verschiedenen Hindernisse, <br> sei aber vorischtig und lass dich nicht erwischen.</p>" +
+                                "<p>Auch vor Gruben solltest du dich stqark in Acht nehme, <br> da fällt man leicht runter</p>" +
+                                "<p>Sein Ziel ist es vor dem angedrohten Sturm zu entkommen <br> und dabei so viele Meter zu machen wir möglich</p>" +
+                                "<br>" +
+                                "<p>Viel Glück, du wirst es brauchen</p>" +
+                            "</body>" +
+                          "</html>";
 
+        JOptionPane.showMessageDialog(null, message, "Steuerung", JOptionPane.INFORMATION_MESSAGE);
     }
 }
