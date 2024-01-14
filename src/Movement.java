@@ -13,26 +13,26 @@ public class Movement extends KeyAdapter {
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_D) {
-            System.out.println("D wurde gedrückt");
+            //System.out.println("D wurde gedrückt");
             game.setPlayAct(RUNNING_FORWARD);
             player.setPlayAct(RUNNING_FORWARD);
             move = 5;
         }
 
         if (key == KeyEvent.VK_A) {
-            System.out.println("A wurde gedrückt");
+            //System.out.println("A wurde gedrückt");
             game.setPlayAct(RUNNING_BACKWARD);
             player.setPlayAct(RUNNING_BACKWARD);
             move = -5;
         }
 
         if (key == KeyEvent.VK_SPACE){
-            System.out.println("SPACE wurde gedrückt");
+            //System.out.println("SPACE wurde gedrückt");
             performJump();
         }
 
         if(key == KeyEvent.VK_ESCAPE){
-            System.out.println("Programm wurde beendet");
+            //System.out.println("Programm wurde beendet");
             System.exit(0);
         }
     }

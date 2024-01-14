@@ -1,12 +1,16 @@
 import Elements.Blocs;
 import Elements.Cactus;
 import Elements.Rock;
+import Elements.Stone;
 
 import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.swing.*;
+import javax.swing.text.Element;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Random;
+
 import static util.PlaayerConst.PlayerMovings.*;
 
 public class Game extends JPanel implements ActionListener {
@@ -19,15 +23,23 @@ public class Game extends JPanel implements ActionListener {
     private int frames = 0;
     private long lastCheck = 0;
     private int width;
+    private int curentScore = 0;
 
     private Timer time;
     private int xImg;
     private int move;
     private int nx, nx2;
+    public int nx3 = 0;
     private int anzahl = 0;
     private int anzahl2 = 0;
     private JButton resetButton;
 
+    //Randomizer
+    Random rand = new Random();
+    private int maxRand = 301;
+    private int minRand = 100;
+    private int random = rand.nextInt(maxRand) + minRand;
+    private int enemyStartCactus = 200;
 
     //Assosiations
     private Movement movement;;
@@ -36,6 +48,7 @@ public class Game extends JPanel implements ActionListener {
     private Rock rock;
     private Cactus cactus;
     private Blocs blocs;
+    private Stone stone;
     public int playAct = STAY;
 
     public Game() {
@@ -66,6 +79,8 @@ public class Game extends JPanel implements ActionListener {
         rock = new Rock();
         cactus = new Cactus();
         blocs = new Blocs();
+        stone = new Stone();
+
     }
 
     private void importBackgroundImg() {
@@ -73,21 +88,6 @@ public class Game extends JPanel implements ActionListener {
         img = image.getImage();
         setPreferredSize(new Dimension(800, 600));
     }
-
-    /*
-    private void backgroundLoop() {
-        if(xImg >= 960 + (anzahl * 1900)) {
-            anzahl += 1;
-            nx = 0;
-            System.out.println("bGL 1");
-        }
-        if(xImg >= 1920 + (anzahl2 * 1900)) {
-            anzahl2 += 1;
-            nx2 = 0;
-            System.out.println("bGL 2");
-        }
-    }
-    */
 
     private void backgroundLoop() {
         if(xImg >= 1920 + (anzahl * 1900)) {
@@ -130,31 +130,20 @@ public class Game extends JPanel implements ActionListener {
         g2d.draw(player.getHitbox());
 
         //Objekte
-        g2d.drawImage(cactus.elementImage, 0-nx, 377, 64, 64, null);
-        cactus.updateHitboxPosition(0-nx, 377);
+        g2d.drawImage(cactus.elementImage, enemyStartCactus-nx3, 377, 64, 64, null);
+        cactus.updateHitboxPosition(enemyStartCactus-nx3, 377);
         g2d.setColor(Color.RED);
         g2d.draw(cactus.gethitBox());
 
-        g2d.drawImage(cactus.elementImage, 960-nx, 377, 64, 64, null);
-        cactus.updateHitboxPosition(960-nx, 377);
-        g2d.setColor(Color.RED);
-        g2d.draw(cactus.gethitBox());
 
-        g2d.drawImage(cactus.elementImage, 1100-nx, 377, 64, 64, null);
-        cactus.updateHitboxPosition(1100-nx, 377);
-        g2d.setColor(Color.RED);
-        g2d.draw(cactus.gethitBox());
 
-        g2d.drawImage(cactus.elementImage, 1500-nx, 377, 64, 64, null);
-        cactus.updateHitboxPosition(1500-nx, 377);
-        g2d.setColor(Color.RED);
-        g2d.draw(cactus.gethitBox());
-
-        g2d.drawImage(blocs.elementImage, 0-nx, 440, 64, 64, null);
-        blocs.updateHitboxPosition(0-nx, 440);
+        g2d.drawImage(blocs.elementImage, 0-nx3, 440, 64, 64, null);
+        blocs.updateHitboxPosition(0-nx3, 440);
         g2d.setColor(Color.ORANGE);
         g2d.draw(blocs.getHitBox());
 
+        System.out.println(nx3/20);
+        curentScore = nx3/20;
         //fpsCounter();
         repaint();
     }
@@ -170,10 +159,28 @@ public class Game extends JPanel implements ActionListener {
         player.setPlayAct(playAct);
         player_Y = jump.jumpPosition;
         backgroundLimit();
+
+        // Überprüfung der Kollision von Hitboxen
+
+        if (player.getHitbox().intersects(cactus.gethitBox())) {
+            //Game Fenster schließt sich
+            movement.move = 0;
+            System.out.println("deom CurentScore beträgt:" + curentScore);
+            gameOver();
+        }
+
+        if (player.getHitbox().intersects(stone.getHitBox())){
+            movement.move = 0;
+            System.out.println("deom CurentScore beträgt:" + curentScore);
+            gameOver();
+        }
+
+
         if(event.getSource() == resetButton){
             resetGame();
         }
     }
+
 
     public void backgroundLimit() {
         //Damit der Spieler nicht wieder endlos nach Hinten laufen kann
@@ -185,6 +192,7 @@ public class Game extends JPanel implements ActionListener {
                 xImg += movement.move;
                 nx += movement.move;
                 nx2 += movement.move;
+                nx3 += movement.move;
             }
         }
         else{
@@ -224,13 +232,25 @@ public class Game extends JPanel implements ActionListener {
     }
 
     //Game Over
+    private void zeigeGameOverBildschirm() {
+        JFrame gameOverFrame = new JFrame("Game Over");
+        gameOverFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        gameOverFrame.setSize(540, 440);
+        gameOverFrame.setLocationRelativeTo(null); // Positionierung des Fenseters in der Mitte
+        gameOverFrame.setVisible(true);
+        gameOverFrame.setResizable(false);
+    }
+
     public void gameOver(){
-        JFrame gameOver = new JFrame("Game Over");
-        gameOver.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        gameOver.setSize(540, 440);
-        gameOver.setLocationRelativeTo(null); //Positionierung des Fenseters in der Mitte
-        gameOver.setVisible(true);
-        gameOver.setResizable(false);
-        gameOver.add(new GameOver());
+        // Setzen Sie die Sichtbarkeit des Hauptspiel-Fensters auf false
+        this.setVisible(false);
+
+        JFrame gameOverFrame = new JFrame("Game Over");
+        gameOverFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        gameOverFrame.setSize(540, 440);
+        gameOverFrame.setLocationRelativeTo(null); // Positionierung des Fenseters in der Mitte
+        gameOverFrame.setVisible(true);
+        gameOverFrame.setResizable(false);
+        System.out.println("Randoim:" + random);
     }
 }

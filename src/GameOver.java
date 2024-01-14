@@ -47,7 +47,7 @@ public class GameOver extends JPanel {
         deathAlert = "Game Over! Your High Score: " + highScore; // Set your death alert message with high score
 
         // Display death alert message using JOptionPane
-        DeathAlertMessage();
+
     }
 
     public void DeathAlertMessage() {
