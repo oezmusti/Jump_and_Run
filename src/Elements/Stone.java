@@ -29,6 +29,11 @@ public class Stone extends Element{
         }
     }
 
+    @Override
+    protected void updateHitboxPosition(int x, int y) {
+
+    }
+
     public String getName(){
         return name;
     }

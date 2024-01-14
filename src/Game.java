@@ -4,10 +4,7 @@ import Elements.Rock;
 
 import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.swing.*;
-import java.awt.Dimension;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import static util.PlaayerConst.PlayerMovings.*;
@@ -21,6 +18,7 @@ public class Game extends JPanel implements ActionListener {
     private int player_Y = 348;
     private int frames = 0;
     private long lastCheck = 0;
+    private int width;
 
     private Timer time;
     private int xImg;
@@ -104,6 +102,16 @@ public class Game extends JPanel implements ActionListener {
         }
     }
 
+    private void playerHitBox() {
+        if(playAct == RUNNING_BACKWARD){
+            width = 50;
+        }
+        if(playAct == RUNNING_FORWARD){
+            width = 40;
+        }
+        player.updateHitboxPosition(left, player_Y, width);
+    }
+
     protected void paintComponent(Graphics graphic) {
         super.paintComponent(graphic);
         Graphics2D g2d = (Graphics2D) graphic;
@@ -117,17 +125,40 @@ public class Game extends JPanel implements ActionListener {
         player.updateAniTick();
 
         g2d.drawImage(player.goForAni[playAct][player.aniIndex], left, player_Y, 96, 96, null);
+        playerHitBox();
+        g2d.setColor(Color.BLUE);
+        g2d.draw(player.getHitbox());
 
         //Objekte
         g2d.drawImage(cactus.elementImage, 0-nx, 377, 64, 64, null);
+        cactus.updateHitboxPosition(0-nx, 377);
+        g2d.setColor(Color.RED);
+        g2d.draw(cactus.gethitBox());
+
         g2d.drawImage(cactus.elementImage, 960-nx, 377, 64, 64, null);
+        cactus.updateHitboxPosition(960-nx, 377);
+        g2d.setColor(Color.RED);
+        g2d.draw(cactus.gethitBox());
+
         g2d.drawImage(cactus.elementImage, 1100-nx, 377, 64, 64, null);
+        cactus.updateHitboxPosition(1100-nx, 377);
+        g2d.setColor(Color.RED);
+        g2d.draw(cactus.gethitBox());
+
         g2d.drawImage(cactus.elementImage, 1500-nx, 377, 64, 64, null);
+        cactus.updateHitboxPosition(1500-nx, 377);
+        g2d.setColor(Color.RED);
+        g2d.draw(cactus.gethitBox());
+
         g2d.drawImage(blocs.elementImage, 0-nx, 440, 64, 64, null);
+        blocs.updateHitboxPosition(0-nx, 440);
+        g2d.setColor(Color.ORANGE);
+        g2d.draw(blocs.getHitBox());
 
         //fpsCounter();
         repaint();
     }
+
 
     private void timerRestart() {
         time = new Timer(15, this);
@@ -175,6 +206,14 @@ public class Game extends JPanel implements ActionListener {
     //Bleibt fürs erste
     public void setPlayAct(int playAct){
         this.playAct = playAct;
+    }
+
+    public int getLeft(){
+        return left;
+    }
+
+    public int getPlayer_Y(){
+        return player_Y;
     }
 
     //Funktion die den Reset ausführen soll

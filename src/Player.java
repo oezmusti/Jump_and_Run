@@ -6,13 +6,13 @@ import java.io.InputStream;
 import static util.PlaayerConst.PlayerMovings.*;
 
 public class Player {
-
     private BufferedImage playerImg;
     public int aniTicker, aniIndex;
     public int aniSpeed = 1000;
     public BufferedImage[][] goForAni;
-    private Rectangle hitBox;
     private int playAct = STAY;
+    private Game game;
+    private Rectangle hitbox;
     public void importPlayerImg() {
 
         InputStream stream = getClass().getClassLoader().getResourceAsStream("assets/Character.png");
@@ -34,8 +34,10 @@ public class Player {
         }
     }
 
-    public void initHitBox(){
-        hitBox = new Rectangle();
+    public void updateHitboxPosition(int x, int y, int width) {
+        // Aktualisiere die Position der Hitbox basierend auf der Position des Spielers
+        hitbox.setLocation(x+25, y+25);
+        hitbox.setSize(width, 67);
     }
 
     public void animation(){
@@ -64,6 +66,9 @@ public class Player {
         return playerImg;
     }
 
+    public Rectangle getHitbox() {
+        return hitbox;
+    }
     public void setPlayAct(int playAct){
         this.playAct = playAct;
     }
@@ -72,6 +77,8 @@ public class Player {
         updateAniTick();
         importPlayerImg();
         animation();
+        hitbox = new Rectangle(0, 0, 40, 96); // Ändere die Größe entsprechend der tatsächlichen Größe deines Spielers
     }
+
 
 }

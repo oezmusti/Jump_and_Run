@@ -36,6 +36,11 @@ public class Rock extends Element{
         }
     }
 
+    @Override
+    protected void updateHitboxPosition(int x, int y) {
+
+    }
+
     public void animation(){
         goForAni = new BufferedImage[3];
 
