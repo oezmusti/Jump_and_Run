@@ -39,7 +39,7 @@ public class Game extends JPanel implements ActionListener {
     private int maxRand = 301;
     private int minRand = 140;
     private int random = rand.nextInt(maxRand) + minRand;
-    private int enemyStartCactus = 200;
+    private int enemyStartCactus = 400;
 
     //Assosiations
     private Movement movement;;
@@ -256,9 +256,16 @@ public class Game extends JPanel implements ActionListener {
         JFrame gameOverFrame = new JFrame("Game Over");
         gameOverFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         gameOverFrame.setSize(540, 440);
-        gameOverFrame.setLocationRelativeTo(null); // Positionierung des Fensters in der Mitte
-        gameOverFrame.setVisible(true);
+        gameOverFrame.setLocationRelativeTo(null);
         gameOverFrame.setResizable(false);
+
+        GameOver gameOverPanel = new GameOver();  // Erstellen Sie ein neues GameOver-Panel
+        gameOverPanel.importElementImage(); // Importieren Sie das Hintergrundbild
+
+        // Fügen Sie das GameOver-Panel zum gameOverFrame hinzu
+        gameOverFrame.add(gameOverPanel);
+
+        gameOverFrame.setVisible(true);
         System.out.println("Randoim:" + random);
     }
 }
