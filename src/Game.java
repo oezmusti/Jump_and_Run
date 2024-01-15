@@ -37,7 +37,7 @@ public class Game extends JPanel implements ActionListener {
     //Randomizer
     Random rand = new Random();
     private int maxRand = 301;
-    private int minRand = 100;
+    private int minRand = 140;
     private int random = rand.nextInt(maxRand) + minRand;
     private int enemyStartCactus = 200;
 
@@ -50,7 +50,7 @@ public class Game extends JPanel implements ActionListener {
     private Blocs blocs;
     private Stone stone;
     public int playAct = STAY;
-
+    private boolean gameOverAngezeigt = false;
     public Game() {
         move = 0;
         nx = 0;
@@ -135,7 +135,10 @@ public class Game extends JPanel implements ActionListener {
         g2d.setColor(Color.RED);
         g2d.draw(cactus.gethitBox());
 
-
+        g2d.drawImage(cactus.elementImage, (enemyStartCactus+random)-nx3, 377, 64, 64, null);
+        cactus.updateHitboxPosition((enemyStartCactus+random)-nx3, 377);
+        g2d.setColor(Color.RED);
+        g2d.draw(cactus.gethitBox());
 
         g2d.drawImage(blocs.elementImage, 0-nx3, 440, 64, 64, null);
         blocs.updateHitboxPosition(0-nx3, 440);
@@ -154,6 +157,7 @@ public class Game extends JPanel implements ActionListener {
         time.start();
     }
 
+    @Override
     public void actionPerformed(ActionEvent event) {
         repaint();
         player.setPlayAct(playAct);
@@ -163,17 +167,24 @@ public class Game extends JPanel implements ActionListener {
         // Überprüfung der Kollision von Hitboxen
 
         if (player.getHitbox().intersects(cactus.gethitBox())) {
-            //Game Fenster schließt sich
+            // Game-Fenster schließt sich
             movement.move = 0;
             System.out.println("deom CurentScore beträgt:" + curentScore);
-            gameOver();
+            if (!gameOverAngezeigt) {
+                gameOver();
+                gameOverAngezeigt = true;
+            }
         }
 
-        if (player.getHitbox().intersects(stone.getHitBox())){
+        if (player.getHitbox().intersects(stone.getHitBox())) {
             movement.move = 0;
             System.out.println("deom CurentScore beträgt:" + curentScore);
-            gameOver();
+            if (!gameOverAngezeigt) {
+                gameOver();
+                gameOverAngezeigt = true;
+            }
         }
+
 
 
         if(event.getSource() == resetButton){
@@ -242,13 +253,10 @@ public class Game extends JPanel implements ActionListener {
     }
 
     public void gameOver(){
-        // Setzen Sie die Sichtbarkeit des Hauptspiel-Fensters auf false
-        this.setVisible(false);
-
         JFrame gameOverFrame = new JFrame("Game Over");
         gameOverFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         gameOverFrame.setSize(540, 440);
-        gameOverFrame.setLocationRelativeTo(null); // Positionierung des Fenseters in der Mitte
+        gameOverFrame.setLocationRelativeTo(null); // Positionierung des Fensters in der Mitte
         gameOverFrame.setVisible(true);
         gameOverFrame.setResizable(false);
         System.out.println("Randoim:" + random);
