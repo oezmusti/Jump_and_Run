@@ -7,14 +7,22 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class GameOver extends JPanel implements ActionListener{
+public class GameOver extends JPanel implements ActionListener {
     private JButton menuButton;
     private JButton restartButton;
     private BufferedImage backgroundImahe;
-    private int highScore;
+    private int score;
+    private int highScore = 40;
 
     public GameOver() {
+        setFocusable(true);
         implementButton();
+        //importElementImage();
+    }
+
+    public void setScore(int score){
+        this.score = score;
+        System.out.println("Dein Übertragener Score hier:" + " " + this.score);
     }
 
     public void importElementImage() {
@@ -31,40 +39,50 @@ public class GameOver extends JPanel implements ActionListener{
         } finally {
             try {
                 stream.close();
-            } catch (IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    public void paintComponent(Graphics g){
+    public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
+
+        // Zeichne das Hintergrundbild
         g2d.drawImage(backgroundImahe, 0, 0, getWidth(), getHeight(), this);
 
+        g2d.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+        g2d.setColor(Color.RED);
+        g2d.drawString("Game Over", 10, 10);
+        System.out.println(score);
+        g2d.drawString("Dein Score:" + score, 10, 70);
+
+        repaint();
     }
 
     private void implementButton() {
         menuButton = new JButton("Menü");
-        menuButton.setBounds(120, 170, 160, 40);
+        menuButton.setBounds(120, 560, 200, 80);  // Adjusted height to avoid overlapping
         menuButton.addActionListener(this);
         menuButton.setVisible(true);
         add(menuButton);
 
         restartButton = new JButton("Reset");
-        restartButton.setBounds(120, 170, 160, 40);
+        restartButton.setBounds(340, 560, 200, 80);  // Adjusted X-coordinate to avoid overlapping
         restartButton.addActionListener(this);
         restartButton.setVisible(true);
         add(restartButton);
     }
 
+
     @Override
     public void actionPerformed(ActionEvent event) {
-        if (event.getSource() == menuButton){
+        if (event.getSource() == menuButton) {
 
         }
 
-        if (event.getSource() == restartButton){
+        if (event.getSource() == restartButton) {
 
         }
     }

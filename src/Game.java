@@ -23,7 +23,7 @@ public class Game extends JPanel implements ActionListener {
     private int frames = 0;
     private long lastCheck = 0;
     private int width;
-    private int curentScore = 0;
+    public int curentScore;
 
     private Timer time;
     private int xImg;
@@ -49,6 +49,7 @@ public class Game extends JPanel implements ActionListener {
     private Cactus cactus;
     private Blocs blocs;
     private Stone stone;
+    private GameOver gameOver;
     public int playAct = STAY;
     private boolean gameOverAngezeigt = false;
     public Game() {
@@ -80,6 +81,7 @@ public class Game extends JPanel implements ActionListener {
         cactus = new Cactus();
         blocs = new Blocs();
         stone = new Stone();
+        gameOver = new GameOver();
 
     }
 
@@ -121,7 +123,12 @@ public class Game extends JPanel implements ActionListener {
         g2d.drawImage(img, 960 - nx, 0, getWidth(), getHeight(), this);
         g2d.drawImage(img, 960 - nx2, 0, getWidth(), getHeight(), this);
 
-        // Zeichne den Spieler
+        //Counter Anzeige
+        g2d.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+        g2d.setColor(Color.RED);
+        g2d.drawString("Score: " + curentScore, 10, 25);
+
+        //Zeichne den Spieler
         player.updateAniTick();
 
         g2d.drawImage(player.goForAni[playAct][player.aniIndex], left, player_Y, 96, 96, null);
@@ -145,8 +152,10 @@ public class Game extends JPanel implements ActionListener {
         g2d.setColor(Color.ORANGE);
         g2d.draw(blocs.getHitBox());
 
-        System.out.println(nx3/20);
-        curentScore = nx3/20;
+        System.out.println(curentScore);
+        curentScore =  nx3/20;
+        gameOver.setScore(curentScore);
+
         //fpsCounter();
         repaint();
     }
@@ -169,7 +178,7 @@ public class Game extends JPanel implements ActionListener {
         if (player.getHitbox().intersects(cactus.gethitBox())) {
             // Game-Fenster schließt sich
             movement.move = 0;
-            System.out.println("deom CurentScore beträgt:" + curentScore);
+            //System.out.println("deom CurentScore beträgt:" + curentScore);
             if (!gameOverAngezeigt) {
                 gameOver();
                 gameOverAngezeigt = true;
@@ -178,7 +187,7 @@ public class Game extends JPanel implements ActionListener {
 
         if (player.getHitbox().intersects(stone.getHitBox())) {
             movement.move = 0;
-            System.out.println("deom CurentScore beträgt:" + curentScore);
+            //System.out.println("deom CurentScore beträgt:" + curentScore);
             if (!gameOverAngezeigt) {
                 gameOver();
                 gameOverAngezeigt = true;
@@ -234,6 +243,9 @@ public class Game extends JPanel implements ActionListener {
     public int getPlayer_Y(){
         return player_Y;
     }
+    public int getCurentScore(){
+        return curentScore;
+    }
 
     //Funktion die den Reset ausführen soll
     private void resetGame() {
@@ -256,9 +268,12 @@ public class Game extends JPanel implements ActionListener {
         JFrame gameOverFrame = new JFrame("Game Over");
         gameOverFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         gameOverFrame.setSize(540, 440);
+        //gameOverFrame.setLayout(null);
         gameOverFrame.setLocationRelativeTo(null);
         gameOverFrame.setResizable(false);
-
+        gameOverFrame.add(new GameOver());
+        gameOverFrame.setVisible(true);
+        /*
         GameOver gameOverPanel = new GameOver();  // Erstellen Sie ein neues GameOver-Panel
         gameOverPanel.importElementImage(); // Importieren Sie das Hintergrundbild
 
@@ -267,5 +282,7 @@ public class Game extends JPanel implements ActionListener {
 
         gameOverFrame.setVisible(true);
         System.out.println("Randoim:" + random);
+        */
+
     }
 }
