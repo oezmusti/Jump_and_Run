@@ -4,8 +4,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Scanner;
 
 
 public class Frame extends JFrame implements ActionListener {
@@ -62,6 +65,18 @@ public class Frame extends JFrame implements ActionListener {
         Graphics2D startGraphic = (Graphics2D) g;
         startGraphic.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
         System.out.println("gezeichnet");
+
+        /*
+        File datei = new File("src/HighScore.txt");
+        System.out.println(datei.isFile());
+        Scanner scanner = null;
+        try {
+            scanner = new Scanner(datei);
+        } catch (FileNotFoundException e){
+            System.out.println("Nicht gefunden");
+        }
+        System.out.println(scanner.nextInt());
+         */
     }
 
     /*

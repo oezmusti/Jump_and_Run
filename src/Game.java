@@ -49,7 +49,6 @@ public class Game extends JPanel implements ActionListener {
     private Cactus cactus;
     private Blocs blocs;
     private Stone stone;
-    private GameOver gameOver;
     public int playAct = STAY;
     private boolean gameOverAngezeigt = false;
     public Game() {
@@ -81,8 +80,6 @@ public class Game extends JPanel implements ActionListener {
         cactus = new Cactus();
         blocs = new Blocs();
         stone = new Stone();
-        gameOver = new GameOver();
-
     }
 
     private void importBackgroundImg() {
@@ -152,9 +149,8 @@ public class Game extends JPanel implements ActionListener {
         g2d.setColor(Color.ORANGE);
         g2d.draw(blocs.getHitBox());
 
-        System.out.println(curentScore);
+        //System.out.println(curentScore);
         curentScore =  nx3/20;
-        gameOver.setScore(curentScore);
 
         //fpsCounter();
         repaint();
@@ -264,25 +260,18 @@ public class Game extends JPanel implements ActionListener {
         gameOverFrame.setResizable(false);
     }
 
-    public void gameOver(){
+    public void gameOver() {
         JFrame gameOverFrame = new JFrame("Game Over");
         gameOverFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         gameOverFrame.setSize(540, 440);
-        //gameOverFrame.setLayout(null);
         gameOverFrame.setLocationRelativeTo(null);
         gameOverFrame.setResizable(false);
-        gameOverFrame.add(new GameOver());
-        gameOverFrame.setVisible(true);
-        /*
-        GameOver gameOverPanel = new GameOver();  // Erstellen Sie ein neues GameOver-Panel
-        gameOverPanel.importElementImage(); // Importieren Sie das Hintergrundbild
+        gameOverFrame.setUndecorated(true);
 
-        // Fügen Sie das GameOver-Panel zum gameOverFrame hinzu
+        GameOver gameOverPanel = new GameOver();
+        //gameOverPanel.importElementImage();
+        gameOverPanel.setScore(curentScore);
         gameOverFrame.add(gameOverPanel);
-
         gameOverFrame.setVisible(true);
-        System.out.println("Randoim:" + random);
-        */
-
     }
 }

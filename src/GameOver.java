@@ -4,25 +4,28 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Scanner;
 
 public class GameOver extends JPanel implements ActionListener {
     private JButton menuButton;
     private JButton restartButton;
     private BufferedImage backgroundImahe;
     private int score;
-    private int highScore = 40;
+    private int highScore;
 
     public GameOver() {
         setFocusable(true);
+        importSavedHighScore();
         implementButton();
         //importElementImage();
     }
 
-    public void setScore(int score){
+    public void setScore(int score) {
         this.score = score;
-        System.out.println("Dein Übertragener Score hier:" + " " + this.score);
     }
 
     public void importElementImage() {
@@ -45,6 +48,25 @@ public class GameOver extends JPanel implements ActionListener {
         }
     }
 
+    public void importSavedHighScore(){
+        File datei = new File("src/HighScore.txt");
+        System.out.println(datei.isFile());
+        Scanner scanner = null;
+        try {
+            scanner = new Scanner(datei);
+            if (scanner.hasNextInt()) {
+                highScore = scanner.nextInt();
+                System.out.println("Highscore geladen: " + highScore);
+            }
+        } catch (FileNotFoundException e){
+            System.out.println("Nicht gefunden");
+        } finally {
+            if (scanner != null) {
+                scanner.close();
+            }
+        }
+    }
+
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
@@ -55,10 +77,27 @@ public class GameOver extends JPanel implements ActionListener {
         g2d.setFont(new Font("TimesRoman", Font.PLAIN, 20));
         g2d.setColor(Color.RED);
         g2d.drawString("Game Over", 10, 10);
-        System.out.println(score);
         g2d.drawString("Dein Score:" + score, 10, 70);
 
-        repaint();
+        // Überprüfen, ob der aktuelle Score den Highscore übertrifft
+        if (score < highScore) {
+            g2d.drawString("Versuch's nächstes Mal!", 10, 130);
+        } else {
+            highScore = score;
+            g2d.drawString("Neuer Highscore: " + highScore, 10, 130);
+            System.out.println("Neuer Highscore: " + highScore);
+            // Hier können Sie die Methode aufrufen, um den Highscore in der Datei zu speichern
+            saveHighScoreToFile();
+        }
+    }
+
+    private void saveHighScoreToFile() {
+        File datei = new File("src/HighScore.txt");
+        try {
+            java.nio.file.Files.write(datei.toPath(), String.valueOf(highScore).getBytes());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void implementButton() {
