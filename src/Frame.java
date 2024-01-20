@@ -102,20 +102,14 @@ public class Frame extends JFrame implements ActionListener {
         startGame.setVisible(true);
         add(startGame);
 
-        settings = new JButton("Einstellungen");
-        settings.setBounds(120, 250, 160, 40);
-        settings.addActionListener(this);
-        settings.setVisible(true);
-        add(settings);
-
         controles = new JButton("Steuerung");
-        controles.setBounds(120, 330, 160, 40);
+        controles.setBounds(120, 250, 160, 40);
         controles.addActionListener(this);
         controles.setVisible(true);
         add(controles);
 
         finish = new JButton("Beenden");
-        finish.setBounds(120, 410, 160, 40);
+        finish.setBounds(120, 330, 160, 40);
         finish.addActionListener(this);
         finish.setVisible(true);
         add(finish);
@@ -134,10 +128,6 @@ public class Frame extends JFrame implements ActionListener {
         if (event.getSource() == startGame){
             setVisible(false);
             game();
-        }
-
-        if(event.getSource() == settings){
-            set();
         }
 
         if(event.getSource() == controles){
@@ -167,10 +157,6 @@ public class Frame extends JFrame implements ActionListener {
 
     }
 
-    public static void set(){
-
-    }
-
     public static void control(){
          String message = "<html>" +
                             "<body style='margin:15px; font-size:12px;'>" +
@@ -178,7 +164,8 @@ public class Frame extends JFrame implements ActionListener {
                                 "<br>" +
                                 "<p>Nach vorne Laufen:  D</p>" +
                                 "<p>Zurück laufen:  A</p>" +
-                                "<p>Springen:  SPACE</p>" +
+                                "<p>Springen:  W</p>" +
+                                "<p>Spiel verlassen: ESCAPE</p>" +
                                 "<br>" +
                                 "<p style='color: #3498db;'>So wird gespielt:</p>" +
                                 "<br>" +

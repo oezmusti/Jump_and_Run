@@ -36,7 +36,7 @@ public class Cactus extends Element{
     @Override
     public void updateHitboxPosition(int x, int y) {
         // Aktualisiere die Position der Hitbox basierend auf der Position des Spielers
-        hitBox.setLocation(x, y);
+        this.hitBox.setLocation(x, y);
     }
 
     public String getName(){
@@ -52,6 +52,6 @@ public class Cactus extends Element{
 
     public Cactus(){
         importElementImage();
-        hitBox = new Rectangle(0, 0, 64, 64); // Ändere die Größe entsprechend der tatsächlichen Größe deines Cactus
+        this.hitBox = new Rectangle(0, 0, 64, 64); // Ändere die Größe entsprechend der tatsächlichen Größe deines Cactus
     }
 }

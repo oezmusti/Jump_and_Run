@@ -26,7 +26,7 @@ public class Movement extends KeyAdapter {
             move = -5;
         }
 
-        if (key == KeyEvent.VK_SPACE){
+        if (key == KeyEvent.VK_W){
             //System.out.println("SPACE wurde gedrückt");
             performJump();
         }

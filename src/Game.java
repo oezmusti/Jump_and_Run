@@ -1,11 +1,7 @@
 import Elements.Blocs;
 import Elements.Cactus;
-import Elements.Rock;
 import Elements.Stone;
-
-import javax.annotation.processing.SupportedAnnotationTypes;
 import javax.swing.*;
-import javax.swing.text.Element;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,10 +15,10 @@ public class Game extends JPanel implements ActionListener {
     private Image img;
     //private Image playerImg;
     private int left;
-    private int player_Y = 348;
+    private int player_Y = 349;
     private int frames = 0;
     private long lastCheck = 0;
-    private int width;
+    private int width = 40;
     public int curentScore;
 
     private Timer time;
@@ -32,23 +28,26 @@ public class Game extends JPanel implements ActionListener {
     public int nx3 = 0;
     private int anzahl = 0;
     private int anzahl2 = 0;
-    private JButton resetButton;
+    private JButton resetButton
+            ;
+    private int cactusX;
+    private int stoneX;
+    private int cactusX2 = 1160;
+    private int stoneX2 = 1560;
 
     //Randomizer
     Random rand = new Random();
-    private int maxRand = 301;
-    private int minRand = 140;
-    private int random = rand.nextInt(maxRand) + minRand;
-    private int enemyStartCactus = 400;
 
     //Assosiations
     private Movement movement;;
     private Jump jump;
     private Player player;
-    private Rock rock;
-    private Cactus cactus;
-    private Blocs blocs;
-    private Stone stone;
+    private Blocs blocs1;
+    private Blocs blocs2;
+    private Cactus cactus1;
+    private Cactus cactus2;
+    private Stone stone1;
+    private Stone stone2;
     public int playAct = STAY;
     private boolean gameOverAngezeigt = false;
     public Game() {
@@ -59,8 +58,6 @@ public class Game extends JPanel implements ActionListener {
         initClass();
         setFocusable(true);
         importBackgroundImg();
-        blocs.importElementImage();
-        rock.importElementImage();
         player.importPlayerImg();
         addKeyListener(movement);
         timerRestart();
@@ -76,10 +73,12 @@ public class Game extends JPanel implements ActionListener {
         movement = new Movement(this);
         jump = new Jump();
         player = new Player();
-        rock = new Rock();
-        cactus = new Cactus();
-        blocs = new Blocs();
-        stone = new Stone();
+        blocs1 = new Blocs();
+        blocs2 = new Blocs();
+        cactus1 = new Cactus();
+        cactus2 = new Cactus();
+        stone1 = new Stone();
+        stone2 = new Stone();
     }
 
     private void importBackgroundImg() {
@@ -92,11 +91,19 @@ public class Game extends JPanel implements ActionListener {
         if(xImg >= 1920 + (anzahl * 1900)) {
             anzahl += 1;
             nx = 0;
+            cactusX2 = rand.nextInt(191);
+            cactusX2 += 1110;
+            stoneX2 = rand.nextInt(191);
+            stoneX2 += 1515;
             System.out.println("bGL 1");
         }
         if(xImg >= 960 + (anzahl2 * 1900)) {
             anzahl2 += 1;
             nx2 = 0;
+            cactusX = rand.nextInt(191);
+            cactusX += 1110;
+            stoneX = rand.nextInt(191);
+            stoneX += 1515;
             System.out.println("bGL 2");
         }
     }
@@ -129,25 +136,64 @@ public class Game extends JPanel implements ActionListener {
         player.updateAniTick();
 
         g2d.drawImage(player.goForAni[playAct][player.aniIndex], left, player_Y, 96, 96, null);
+        //System.out.println("Player width: " + width);
         playerHitBox();
         g2d.setColor(Color.BLUE);
         g2d.draw(player.getHitbox());
 
         //Objekte
-        g2d.drawImage(cactus.elementImage, enemyStartCactus-nx3, 377, 64, 64, null);
-        cactus.updateHitboxPosition(enemyStartCactus-nx3, 377);
+        g2d.drawImage(cactus1.elementImage, cactusX2 - nx, 377, 64, 64, null);
+        cactus1.updateHitboxPosition (cactusX2- nx, 377);
         g2d.setColor(Color.RED);
-        g2d.draw(cactus.gethitBox());
+        g2d.draw(cactus1.gethitBox());
 
-        g2d.drawImage(cactus.elementImage, (enemyStartCactus+random)-nx3, 377, 64, 64, null);
-        cactus.updateHitboxPosition((enemyStartCactus+random)-nx3, 377);
+        g2d.drawImage(stone1.elementImage, stoneX2 - nx, 377, 64, 64, null);
+        stone1.updateHitboxPosition (stoneX2- nx, 377);
         g2d.setColor(Color.RED);
-        g2d.draw(cactus.gethitBox());
+        g2d.draw(stone1.getHitBox());
+
+        g2d.drawImage(stone2.elementImage, stoneX - nx2, 377, 64, 64, null);
+        stone2.updateHitboxPosition (stoneX- nx2, 377);
+        g2d.setColor(Color.RED);
+        g2d.draw(stone2.getHitBox());
+
+        g2d.drawImage(cactus2.elementImage, cactusX - nx2, 377, 64, 64, null);
+        cactus2.updateHitboxPosition (cactusX- nx2, 377);
+        g2d.setColor(Color.RED);
+        g2d.draw(cactus2.gethitBox());
+
+
+        g2d.drawImage(blocs1.elementImage, 960-nx2, 440, 896, 64, null);
+        blocs1.updateHitboxPosition(960-nx2, 440);
+        g2d.setColor(Color.ORANGE);
+        g2d.draw(blocs1.getHitBox());
+
+        g2d.drawImage(blocs2.elementImage, 960-nx, 440, 896, 64, null);
+        blocs2.updateHitboxPosition(960-nx, 440);
+        g2d.setColor(Color.ORANGE);
+        g2d.draw(blocs2.getHitBox());
+
+        /*
+        g2d.drawImage(cactus1.elementImage, enemyStartCactus-nx3, 377, 64, 64, null);
+        this.cactus1.updateHitboxPosition(enemyStartCactus-nx3, 377);
+        g2d.setColor(Color.RED);
+        g2d.draw(cactus1.gethitBox());
+
+        g2d.drawImage(cactus2.elementImage, (enemyStartCactus+random)-nx3, 377, 64, 64, null);
+        this.cactus2.updateHitboxPosition((enemyStartCactus+random)-nx3, 377);
+        g2d.setColor(Color.RED);
+        g2d.draw(cactus2.gethitBox());
+
+        g2d.drawImage(cactus3.elementImage, (enemyStartCactus+random+200)-nx3, 377, 64, 64, null);
+        this.cactus3.updateHitboxPosition((enemyStartCactus+random+200)-nx3, 377);
+        g2d.setColor(Color.RED);
+        g2d.draw(cactus3.gethitBox());
 
         g2d.drawImage(blocs.elementImage, 0-nx3, 440, 64, 64, null);
         blocs.updateHitboxPosition(0-nx3, 440);
         g2d.setColor(Color.ORANGE);
         g2d.draw(blocs.getHitBox());
+         */
 
         //System.out.println(curentScore);
         curentScore =  nx3/20;
@@ -164,14 +210,21 @@ public class Game extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent event) {
-        repaint();
+        //repaint();
         player.setPlayAct(playAct);
         player_Y = jump.jumpPosition;
         backgroundLimit();
 
-        // Überprüfung der Kollision von Hitboxen
 
-        if (player.getHitbox().intersects(cactus.gethitBox())) {
+        if (player.getHitbox().intersects(blocs1.getHitBox()) || player.getHitbox().intersects(blocs2.getHitBox()) || player_Y < 349) {
+            System.out.println("Kein Game Over");
+        }else {
+            System.out.println("Ein game Over ");
+            gameOver();
+        }
+
+        // Überprüfung der Kollision von Hitboxen
+        if (player.getHitbox().intersects(cactus1.gethitBox())) {
             // Game-Fenster schließt sich
             movement.move = 0;
             //System.out.println("deom CurentScore beträgt:" + curentScore);
@@ -181,7 +234,8 @@ public class Game extends JPanel implements ActionListener {
             }
         }
 
-        if (player.getHitbox().intersects(stone.getHitBox())) {
+        if (player.getHitbox().intersects(cactus2.gethitBox())) {
+            // Game-Fenster schließt sich
             movement.move = 0;
             //System.out.println("deom CurentScore beträgt:" + curentScore);
             if (!gameOverAngezeigt) {
@@ -190,13 +244,28 @@ public class Game extends JPanel implements ActionListener {
             }
         }
 
+        if (player.getHitbox().intersects(stone1.getHitBox())) {
+            movement.move = 0;
+            //System.out.println("deom CurentScore beträgt:" + curentScore);
+            if (!gameOverAngezeigt) {
+                gameOver();
+                gameOverAngezeigt = true;
+            }
+        }
 
+        if (player.getHitbox().intersects(stone2.getHitBox())) {
+            movement.move = 0;
+            //System.out.println("deom CurentScore beträgt:" + curentScore);
+            if (!gameOverAngezeigt) {
+                gameOver();
+                gameOverAngezeigt = true;
+            }
+        }
 
         if(event.getSource() == resetButton){
             resetGame();
         }
     }
-
 
     public void backgroundLimit() {
         //Damit der Spieler nicht wieder endlos nach Hinten laufen kann

@@ -74,21 +74,39 @@ public class GameOver extends JPanel implements ActionListener {
         // Zeichne das Hintergrundbild
         g2d.drawImage(backgroundImahe, 0, 0, getWidth(), getHeight(), this);
 
-        g2d.setFont(new Font("TimesRoman", Font.PLAIN, 20));
-        g2d.setColor(Color.RED);
-        g2d.drawString("Game Over", 10, 10);
-        g2d.drawString("Dein Score:" + score, 10, 70);
-
-        // Überprüfen, ob der aktuelle Score den Highscore übertrifft
+        //HighScore check
         if (score < highScore) {
-            g2d.drawString("Versuch's nächstes Mal!", 10, 130);
+            System.out.println(1);
         } else {
             highScore = score;
-            g2d.drawString("Neuer Highscore: " + highScore, 10, 130);
-            System.out.println("Neuer Highscore: " + highScore);
-            // Hier können Sie die Methode aufrufen, um den Highscore in der Datei zu speichern
             saveHighScoreToFile();
         }
+
+        g2d.setColor(Color.RED);
+
+        String scoreText = "Dein Score: " + score;
+        String curenthighScoreText = "Dein aktueller Highscore: " + highScore;
+        String messageText = (score < highScore) ? "Versuch's nächstes Mal!" : "Neuer Highscore: " + highScore;
+
+        // Setze die Schriftgröße auf 30 Pixel für den Text "Game Over"
+        g2d.setFont(new Font("TimesRoman", Font.PLAIN, 30));
+        int xGameOver = (getWidth() - g2d.getFontMetrics().stringWidth("Game Over")) / 2;
+        g2d.drawString("Game Over", xGameOver, 50);
+
+        // Setze die Schriftgröße auf 20 Pixel für den restlichen Text
+        g2d.setFont(new Font("TimesRoman", Font.PLAIN, 20));
+        int xScore = (getWidth() - g2d.getFontMetrics().stringWidth(scoreText)) / 2;
+        int xCurentHighScore = (getWidth() - g2d.getFontMetrics().stringWidth(curenthighScoreText)) / 2;
+        int xMessage = (getWidth() - g2d.getFontMetrics().stringWidth(messageText)) / 2;
+
+        // Zeichne den restlichen Text
+        g2d.drawString(scoreText, xScore, 100);
+        g2d.drawString(curenthighScoreText, xCurentHighScore, 150);
+        g2d.drawString(messageText, xMessage, 200);
+
+        // Buttons positionieren
+        menuButton.setLocation(120, 250);
+        restartButton.setLocation(340, 250);
     }
 
     private void saveHighScoreToFile() {
@@ -118,11 +136,46 @@ public class GameOver extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent event) {
         if (event.getSource() == menuButton) {
+            Window[] windows = Window.getWindows();
+            for (Window window : windows) {
+                if (window instanceof JFrame) {
+                    window.dispose();
+                }
+            }
 
+            // Schließe das aktuelle Fenster
+            SwingUtilities.getWindowAncestor(this).dispose();
+
+            // Öffne ein neues Frame
+            Frame.main(new String[0]);
         }
 
         if (event.getSource() == restartButton) {
+            // Schließe alle vorhandenen Fenster
+            Window[] windows = Window.getWindows();
+            for (Window window : windows) {
+                if (window instanceof JFrame) {
+                    window.dispose();
+                }
+            }
 
+            // Beende den aktuellen JVM-Prozess und starte einen neuen
+            try {
+                String java = System.getProperty("java.home") + "/bin/java";
+                ProcessBuilder builder = new ProcessBuilder(java, "-jar", "DeinSpiel.jar");
+                builder.start();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            // Öffne das neue Spiel-Fenster
+            JFrame game = new JFrame("Jump and Run");
+            game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            game.setSize(977, 540);
+            game.setLocationRelativeTo(null); //Positionierung des Fensters in der Mitte
+            game.setVisible(true);
+            game.setResizable(false);
+            game.add(new Game());
         }
     }
 }

@@ -51,6 +51,6 @@ public class Blocs extends Element{
 
     public Blocs(){
         importElementImage();
-        hitBox = new Rectangle(0,0, 64,64);
+        hitBox = new Rectangle(0,0, 896,64);
     }
 }

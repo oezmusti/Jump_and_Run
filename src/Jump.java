@@ -2,7 +2,7 @@ public class Jump extends Thread{
     static boolean finished = true;
     static boolean highstPoint = false;
     public int jumpHigh = 180;
-    static int basepointY = 348;
+    static int basepointY = 349;
     static int jumpPosition = basepointY;
     public int jumpTime;
 
