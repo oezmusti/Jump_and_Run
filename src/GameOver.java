@@ -1,3 +1,5 @@
+import Elements.Sting;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -16,6 +18,7 @@ public class GameOver extends JPanel implements ActionListener {
     private BufferedImage backgroundImahe;
     private int score;
     private int highScore;
+    private String killObject;
 
     public GameOver() {
         setFocusable(true);
@@ -26,6 +29,10 @@ public class GameOver extends JPanel implements ActionListener {
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public void setKillObject(String KO){
+        this.killObject = KO;
     }
 
     public void importElementImage() {
@@ -86,6 +93,26 @@ public class GameOver extends JPanel implements ActionListener {
 
         String scoreText = "Dein Score: " + score;
         String curenthighScoreText = "Dein aktueller Highscore: " + highScore;
+        String killMessage;
+
+        switch (killObject){
+            case "Kaktus":
+                killMessage = "Du wurdest von einem Kaktus getötet";
+                break;
+            case "Loch":
+                killMessage = "Du bist tief gefallen";
+                break;
+            case "Stachel":
+                killMessage = "Pass auf wo du hintrittst";
+                break;
+            case "Stein":
+                killMessage = "Du bist über ein Stein gestolpert";
+                break;
+            default:
+                killMessage = "Du wurdest auser gefächt gesetzt";
+                break;
+        }
+
         String messageText = (score < highScore) ? "Versuch's nächstes Mal!" : "Neuer Highscore: " + highScore;
 
         // Setze die Schriftgröße auf 30 Pixel für den Text "Game Over"
@@ -98,11 +125,13 @@ public class GameOver extends JPanel implements ActionListener {
         int xScore = (getWidth() - g2d.getFontMetrics().stringWidth(scoreText)) / 2;
         int xCurentHighScore = (getWidth() - g2d.getFontMetrics().stringWidth(curenthighScoreText)) / 2;
         int xMessage = (getWidth() - g2d.getFontMetrics().stringWidth(messageText)) / 2;
+        int xKillMessage = (getWidth() - g2d.getFontMetrics().stringWidth(killMessage)) / 2;
 
         // Zeichne den restlichen Text
         g2d.drawString(scoreText, xScore, 100);
-        g2d.drawString(curenthighScoreText, xCurentHighScore, 150);
-        g2d.drawString(messageText, xMessage, 200);
+        g2d.drawString(curenthighScoreText, xCurentHighScore, 130);
+        g2d.drawString(killMessage, xKillMessage, 160);
+        g2d.drawString(messageText, xMessage, 190);
 
         // Buttons positionieren
         exitButton.setLocation(120, 250);

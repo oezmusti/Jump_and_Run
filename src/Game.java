@@ -35,6 +35,7 @@ public class Game extends JPanel implements ActionListener {
     private int cactusX2 = 1160;
     private int stoneX2 = 1560;
     private int holeX2 = 1810;
+    private String killObject;
     //Randomizer
     Random rand = new Random();
 
@@ -42,6 +43,7 @@ public class Game extends JPanel implements ActionListener {
     private Movement movement;;
     private Jump jump;
     private Player player;
+    private GameOver gameOver;
     private Blocs blocs1;
     private Blocs blocs2;
     private Cactus cactus1;
@@ -76,6 +78,7 @@ public class Game extends JPanel implements ActionListener {
         movement = new Movement(this);
         jump = new Jump();
         player = new Player();
+        gameOver = new GameOver();
         blocs1 = new Blocs();
         blocs2 = new Blocs();
         cactus1 = new Cactus();
@@ -269,6 +272,8 @@ public class Game extends JPanel implements ActionListener {
 
         if (player.getHitbox().intersects(hole1.gethitBox()) || player.getHitbox().intersects(hole2.gethitBox())) {
             //System.out.println("deom CurentScore beträgt:" + curentScore);
+            movement.move = 0;
+            killObject = hole1.getName();
             if (!gameOverAngezeigt) {
                 gameOver();
                 gameOverAngezeigt = true;
@@ -279,6 +284,7 @@ public class Game extends JPanel implements ActionListener {
         if (player.getHitbox().intersects(cactus1.gethitBox())) {
             // Game-Fenster schließt sich
             movement.move = 0;
+            killObject = cactus1.getName();
             //System.out.println("deom CurentScore beträgt:" + curentScore);
             if (!gameOverAngezeigt) {
                 gameOver();
@@ -290,6 +296,7 @@ public class Game extends JPanel implements ActionListener {
         if (player.getHitbox().intersects(sting.gethitBox())) {
             // Game-Fenster schließt sich
             movement.move = 0;
+            killObject = sting.getName();
             //System.out.println("deom CurentScore beträgt:" + curentScore);
             if (!gameOverAngezeigt) {
                 gameOver();
@@ -300,6 +307,7 @@ public class Game extends JPanel implements ActionListener {
         if (player.getHitbox().intersects(cactus2.gethitBox())) {
             // Game-Fenster schließt sich
             movement.move = 0;
+            killObject = cactus2.getName();
             //System.out.println("deom CurentScore beträgt:" + curentScore);
             if (!gameOverAngezeigt) {
                 gameOver();
@@ -309,6 +317,7 @@ public class Game extends JPanel implements ActionListener {
 
         if (player.getHitbox().intersects(stone1.getHitBox())) {
             movement.move = 0;
+            killObject = stone1.getName();
             //System.out.println("deom CurentScore beträgt:" + curentScore);
             if (!gameOverAngezeigt) {
                 gameOver();
@@ -318,6 +327,7 @@ public class Game extends JPanel implements ActionListener {
 
         if (player.getHitbox().intersects(stone2.getHitBox())) {
             movement.move = 0;
+            killObject = stone2.getName();
             //System.out.println("deom CurentScore beträgt:" + curentScore);
             if (!gameOverAngezeigt) {
                 gameOver();
@@ -403,6 +413,7 @@ public class Game extends JPanel implements ActionListener {
         GameOver gameOverPanel = new GameOver();
         //gameOverPanel.importElementImage();
         gameOverPanel.setScore(curentScore);
+        gameOverPanel.setKillObject(killObject);
         gameOverFrame.add(gameOverPanel);
         gameOverFrame.setVisible(true);
     }

@@ -14,7 +14,6 @@ import java.util.Scanner;
 public class Frame extends JFrame implements ActionListener {
 
     private JButton startGame;
-    private JButton settings;
     private JButton controles;
     private JButton finish;
     private BufferedImage backgroundImage;
@@ -28,6 +27,7 @@ public class Frame extends JFrame implements ActionListener {
          * Fensterhöhe 400
          *
          */
+        /*
         Frame frame = new Frame("Menü");//Framename
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Damit Exit funktioniert
         frame.setSize(400, 540);
@@ -35,13 +35,36 @@ public class Frame extends JFrame implements ActionListener {
         frame.setLayout(null); //Damit kein Vorgefertigtes Layout angewendet werden kann
         frame.setResizable(false);
         frame.setVisible(true);
+         */
+
+        JFrame frame = new JFrame("Menü");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Damit Exit funktioniert
+        frame.setSize(400, 540);
+        frame.setLocationRelativeTo(null); //Positionierung des Fensters in der Mitte des Bildschierms
+        frame.setLayout(null); //Damit kein Vorgefertigtes Layout angewendet werden kann
+        frame.setResizable(false);
+        Frame f = new Frame("Menü");
+        frame.add(f);
+        frame.setVisible(true);
+    }
+
+    /*
+     *Frameinhalte
+     *
+     * Hier wrden die Frameinhalte für das Startfenster definiert.
+     * Zurzeiit bestehe diese aus 3 Schasltflächen.
+     * Unter andeem werden hier die Positionen und die Propositionen definiert.
+     *
+     */
+    public Frame(String title){
+        super(title);
+        importBackgroudImg();
+        importJButtons();
 
     }
 
-    public void importPlayerImg() {
-
+    public void importBackgroudImg() {
         InputStream stream = getClass().getClassLoader().getResourceAsStream("assets/Start.png");
-
         try {
             if (stream != null) {
                 backgroundImage = ImageIO.read(stream);
@@ -61,39 +84,18 @@ public class Frame extends JFrame implements ActionListener {
 
     @Override
     public void paint(Graphics g) {
-        super.paint(g);
+        super.paint(g); // First, draw the background of the parent class
         Graphics2D startGraphic = (Graphics2D) g;
-        startGraphic.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
-        System.out.println("gezeichnet");
+        startGraphic.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), null);
 
-        /*
-        File datei = new File("src/HighScore.txt");
-        System.out.println(datei.isFile());
-        Scanner scanner = null;
-        try {
-            scanner = new Scanner(datei);
-        } catch (FileNotFoundException e){
-            System.out.println("Nicht gefunden");
+        // Then, paint the buttons
+        for (Component comp : getComponents()) {
+            if (comp instanceof JButton) {
+                ((JButton) comp).paint(g);
+            }
         }
-        System.out.println(scanner.nextInt());
-         */
     }
 
-    /*
-     *Frameinhalte
-     *
-     * Hier wrden die Frameinhalte für das Startfenster definiert.
-     * Zurzeiit bestehe diese aus 3 Schasltflächen.
-     * Unter andeem werden hier die Positionen und die Propositionen definiert.
-     *
-     */
-    public Frame(String title){
-        super(title);
-        importPlayerImg();
-
-        importJButtons();
-
-    }
 
     private void importJButtons() {
         startGame = new JButton("Starten");
@@ -137,7 +139,7 @@ public class Frame extends JFrame implements ActionListener {
         if(event.getSource() == finish) {
             System.exit(0);
         }
-
+        repaint();
     }
 
     /*
