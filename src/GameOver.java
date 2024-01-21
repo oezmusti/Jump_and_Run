@@ -11,7 +11,7 @@ import java.io.InputStream;
 import java.util.Scanner;
 
 public class GameOver extends JPanel implements ActionListener {
-    private JButton menuButton;
+    private JButton exitButton;
     private JButton restartButton;
     private BufferedImage backgroundImahe;
     private int score;
@@ -105,7 +105,7 @@ public class GameOver extends JPanel implements ActionListener {
         g2d.drawString(messageText, xMessage, 200);
 
         // Buttons positionieren
-        menuButton.setLocation(120, 250);
+        exitButton.setLocation(120, 250);
         restartButton.setLocation(340, 250);
     }
 
@@ -119,11 +119,11 @@ public class GameOver extends JPanel implements ActionListener {
     }
 
     private void implementButton() {
-        menuButton = new JButton("Menü");
-        menuButton.setBounds(120, 560, 200, 80);  // Adjusted height to avoid overlapping
-        menuButton.addActionListener(this);
-        menuButton.setVisible(true);
-        add(menuButton);
+        exitButton = new JButton("Beenden");
+        exitButton.setBounds(120, 560, 200, 80);  // Adjusted height to avoid overlapping
+        exitButton.addActionListener(this);
+        exitButton.setVisible(true);
+        add(exitButton);
 
         restartButton = new JButton("Reset");
         restartButton.setBounds(340, 560, 200, 80);  // Adjusted X-coordinate to avoid overlapping
@@ -135,19 +135,8 @@ public class GameOver extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent event) {
-        if (event.getSource() == menuButton) {
-            Window[] windows = Window.getWindows();
-            for (Window window : windows) {
-                if (window instanceof JFrame) {
-                    window.dispose();
-                }
-            }
-
-            // Schließe das aktuelle Fenster
-            SwingUtilities.getWindowAncestor(this).dispose();
-
-            // Öffne ein neues Frame
-            Frame.main(new String[0]);
+        if (event.getSource() == exitButton) {
+            System.exit(0);
         }
 
         if (event.getSource() == restartButton) {

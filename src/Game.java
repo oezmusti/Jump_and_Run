@@ -1,6 +1,5 @@
-import Elements.Blocs;
-import Elements.Cactus;
-import Elements.Stone;
+import Elements.*;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -26,15 +25,16 @@ public class Game extends JPanel implements ActionListener {
     private int move;
     private int nx, nx2;
     public int nx3 = 0;
-    private int anzahl = 0;
-    private int anzahl2 = 0;
-    private JButton resetButton
-            ;
+    private int imageNumber = 0;
+    private int imageNumber2 = 0;
+    private JButton resetButton;
     private int cactusX;
     private int stoneX;
+    private int holeX1;
+    private int stingX = 1380;
     private int cactusX2 = 1160;
     private int stoneX2 = 1560;
-
+    private int holeX2 = 1810;
     //Randomizer
     Random rand = new Random();
 
@@ -48,6 +48,9 @@ public class Game extends JPanel implements ActionListener {
     private Cactus cactus2;
     private Stone stone1;
     private Stone stone2;
+    private Sting sting;
+    private Hole hole1;
+    private Hole hole2;
     public int playAct = STAY;
     private boolean gameOverAngezeigt = false;
     public Game() {
@@ -79,6 +82,9 @@ public class Game extends JPanel implements ActionListener {
         cactus2 = new Cactus();
         stone1 = new Stone();
         stone2 = new Stone();
+        sting = new Sting();
+        hole1 = new Hole();
+        hole2 = new Hole();
     }
 
     private void importBackgroundImg() {
@@ -88,22 +94,28 @@ public class Game extends JPanel implements ActionListener {
     }
 
     private void backgroundLoop() {
-        if(xImg >= 1920 + (anzahl * 1900)) {
-            anzahl += 1;
+        if(xImg >= 1920 + (imageNumber * 1900)) {
+            imageNumber += 1;
             nx = 0;
             cactusX2 = rand.nextInt(191);
             cactusX2 += 1110;
             stoneX2 = rand.nextInt(191);
             stoneX2 += 1515;
+            holeX2 = rand.nextInt(191);
+            holeX2 += 1765;
+            stingX = rand.nextInt(191);
+            stingX += 1370;
             System.out.println("bGL 1");
         }
-        if(xImg >= 960 + (anzahl2 * 1900)) {
-            anzahl2 += 1;
+        if(xImg >= 960 + (imageNumber2 * 1900)) {
+            imageNumber2 += 1;
             nx2 = 0;
             cactusX = rand.nextInt(191);
             cactusX += 1110;
             stoneX = rand.nextInt(191);
             stoneX += 1515;
+            holeX1 = rand.nextInt(191);
+            holeX1 += 1765;
             System.out.println("bGL 2");
         }
     }
@@ -141,11 +153,18 @@ public class Game extends JPanel implements ActionListener {
         g2d.setColor(Color.BLUE);
         g2d.draw(player.getHitbox());
 
+        //System.out.println(player_Y);
         //Objekte
+
         g2d.drawImage(cactus1.elementImage, cactusX2 - nx, 377, 64, 64, null);
         cactus1.updateHitboxPosition (cactusX2- nx, 377);
         g2d.setColor(Color.RED);
         g2d.draw(cactus1.gethitBox());
+
+        g2d.drawImage(sting.elementImage, stingX - nx, 424, 32, 16, null);
+        sting.updateHitboxPosition (stingX- nx, 424);
+        g2d.setColor(Color.RED);
+        g2d.draw(sting.gethitBox());
 
         g2d.drawImage(stone1.elementImage, stoneX2 - nx, 377, 64, 64, null);
         stone1.updateHitboxPosition (stoneX2- nx, 377);
@@ -162,17 +181,25 @@ public class Game extends JPanel implements ActionListener {
         g2d.setColor(Color.RED);
         g2d.draw(cactus2.gethitBox());
 
-
-        g2d.drawImage(blocs1.elementImage, 960-nx2, 440, 896, 64, null);
+        g2d.drawImage(blocs1.elementImage, 960-nx2, 440, 960, 64, null);
         blocs1.updateHitboxPosition(960-nx2, 440);
         g2d.setColor(Color.ORANGE);
         g2d.draw(blocs1.getHitBox());
 
-        g2d.drawImage(blocs2.elementImage, 960-nx, 440, 896, 64, null);
+        g2d.drawImage(blocs2.elementImage, 960-nx, 440, 960, 64, null);
         blocs2.updateHitboxPosition(960-nx, 440);
         g2d.setColor(Color.ORANGE);
         g2d.draw(blocs2.getHitBox());
 
+        g2d.drawImage(hole1.elementImage, holeX2 - nx, 440, 80, 64, null);
+        hole1.updateHitboxPosition (holeX2- nx, 440);
+        g2d.setColor(Color.RED);
+        g2d.draw(hole1.gethitBox());
+
+        g2d.drawImage(hole2.elementImage, holeX1 - nx2, 440, 80, 64, null);
+        hole2.updateHitboxPosition (holeX1 - nx2, 440);
+        g2d.setColor(Color.RED);
+        g2d.draw(hole2.gethitBox());
         /*
         g2d.drawImage(cactus1.elementImage, enemyStartCactus-nx3, 377, 64, 64, null);
         this.cactus1.updateHitboxPosition(enemyStartCactus-nx3, 377);
@@ -215,16 +242,52 @@ public class Game extends JPanel implements ActionListener {
         player_Y = jump.jumpPosition;
         backgroundLimit();
 
+       /*
+       if(player.getHitbox().intersects(blocs1.getHitBox()) || player.getHitbox().intersects(blocs2.getHitBox())){
+           System.out.println("Kein GameOver");
+       }
+       else {
+           if (player_Y < 349) {
+               System.out.println("Kein GameOver");
+           } else if (player_Y == 349 && (player.getHitbox().intersects(blocs1.getHitBox()) || player.getHitbox().intersects(blocs2.getHitBox()))) {
+               System.out.println("Kein GameOver");
+           } else if (!(player.getHitbox().intersects(blocs1.getHitBox()) && player.getHitbox().intersects(blocs2.getHitBox())) && player_Y <= 349) {
+               System.out.println("Das ist das andere GameOver");
+           } else if (player_Y > 349 && player.getHitbox().intersects(blocs1.getHitBox()) && player.getHitbox().intersects(blocs2.getHitBox())) {
+               System.out.println("Kein GameOver");
+           } else {
+               System.out.println("Das ist nicht nur GameOver sondern mehr GameOver");
+               movement.move = 0;
+               if (!gameOverAngezeigt) {
+                   gameOver();
+                   gameOverAngezeigt = true;
+                }
+            }
+         }
 
-        if (player.getHitbox().intersects(blocs1.getHitBox()) || player.getHitbox().intersects(blocs2.getHitBox()) || player_Y < 349) {
-            System.out.println("Kein Game Over");
-        }else {
-            System.out.println("Ein game Over ");
-            gameOver();
+        */
+
+        if (player.getHitbox().intersects(hole1.gethitBox()) || player.getHitbox().intersects(hole2.gethitBox())) {
+            //System.out.println("deom CurentScore beträgt:" + curentScore);
+            if (!gameOverAngezeigt) {
+                gameOver();
+                gameOverAngezeigt = true;
+            }
         }
 
         // Überprüfung der Kollision von Hitboxen
         if (player.getHitbox().intersects(cactus1.gethitBox())) {
+            // Game-Fenster schließt sich
+            movement.move = 0;
+            //System.out.println("deom CurentScore beträgt:" + curentScore);
+            if (!gameOverAngezeigt) {
+                gameOver();
+                gameOverAngezeigt = true;
+            }
+        }
+
+        // Überprüfung der Kollision von Hitboxen
+        if (player.getHitbox().intersects(sting.gethitBox())) {
             // Game-Fenster schließt sich
             movement.move = 0;
             //System.out.println("deom CurentScore beträgt:" + curentScore);

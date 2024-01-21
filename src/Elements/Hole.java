@@ -6,19 +6,20 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class Stone extends Element{
-    private String name = "Stein";
+public class Hole extends Element{
+    private String name = "Stachel";
     private Rectangle hitBox;
     public BufferedImage elementImage;
+
     @Override
     public void importElementImage() {
-        InputStream stream = getClass().getClassLoader().getResourceAsStream("assets/grauerStein.png");
+        InputStream stream = getClass().getClassLoader().getResourceAsStream("assets/Loch.png");
 
         try {
             if (stream != null) {
                 elementImage = ImageIO.read(stream);
             } else {
-                System.err.println("Bild nicht gefunden: assets/grauerStein.png");
+                System.err.println("Bild nicht gefunden: assets/Cactus-stehend.png");
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -34,23 +35,22 @@ public class Stone extends Element{
     @Override
     public void updateHitboxPosition(int x, int y) {
         // Aktualisiere die Position der Hitbox basierend auf der Position des Spielers
-        hitBox.setLocation(x, y);
+        this.hitBox.setLocation(x, y);
     }
 
     public String getName(){
         return name;
     }
 
-    public Rectangle getHitBox(){
+    public Rectangle gethitBox(){
         return hitBox;
     }
-
     public BufferedImage getElementImage(){
         return elementImage;
     }
 
-    public Stone(){
+    public Hole(){
         importElementImage();
-        hitBox = new Rectangle(0, 0, 73, 64); // Ändere die Größe entsprechend der tatsächlichen Größe deines Cactus
+        this.hitBox = new Rectangle(0, 0, 80, 64); // Ändere die Größe entsprechend der tatsächlichen Größe deines Cactus
     }
 }

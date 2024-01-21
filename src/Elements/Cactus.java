@@ -8,7 +8,7 @@ import java.io.InputStream;
 
 public class Cactus extends Element{
 
-    private String name = "Cactus";
+    private String name = "Kaktus";
     private Rectangle hitBox;
     public BufferedImage elementImage;
 
