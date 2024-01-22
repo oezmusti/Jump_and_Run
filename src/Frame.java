@@ -4,38 +4,16 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Scanner;
 
 
-public class Frame extends JFrame implements ActionListener {
+public class Frame extends JPanel implements ActionListener {
 
     private JButton startGame;
     private JButton controles;
     private JButton finish;
     private BufferedImage backgroundImage;
-
-
-    public static void main(String[] args) {
-        /*
-         *Frame wird mit den definierten Parametern erstellt
-         * Name: Jum and Run
-         * Fensterweite: 400
-         * Fensterhöhe 400
-         *
-         */
-
-        Frame frame = new Frame("Menü");//Framename
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Damit Exit funktioniert
-        frame.setSize(400, 540);
-        frame.setLocationRelativeTo(null); //Positionierung des Fensters in der Mitte des Bildschierms
-        frame.setLayout(null); //Damit kein Vorgefertigtes Layout angewendet werden kann
-        frame.setResizable(false);
-        frame.setVisible(true);
-    }
 
     /*
      *Frameinhalte
@@ -45,8 +23,8 @@ public class Frame extends JFrame implements ActionListener {
      * Unter andeem werden hier die Positionen und die Propositionen definiert.
      *
      */
-    public Frame(String title){
-        super(title);
+    public Frame(){
+        setFocusable(true);
         importBackgroudImg();
         importJButtons();
 
@@ -72,19 +50,19 @@ public class Frame extends JFrame implements ActionListener {
     }
 
     @Override
-    public void paint(Graphics g) {
-        super.paint(g); // First, draw the background of the parent class
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g); // First, draw the background of the parent class
         Graphics2D startGraphic = (Graphics2D) g;
         startGraphic.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), null);
 
-        // Then, paint the buttons
-        for (Component comp : getComponents()) {
-            if (comp instanceof JButton) {
-                ((JButton) comp).paint(g);
-            }
-        }
-    }
+        startGame.setLocation(120, 170);
+        startGame.setSize(160,40 );
+        controles.setLocation(120, 250);
+        controles.setSize(160,40 );
+        finish.setLocation(120, 330);
+        finish.setSize(160,40 );
 
+    }
 
     private void importJButtons() {
         startGame = new JButton("Starten");
@@ -114,10 +92,14 @@ public class Frame extends JFrame implements ActionListener {
     * Hier wird durch den ActionListener funktionen ausfgelöst,
     *  die beim Drücken der jeweiligen Schaltföche ausgeführt werden
     */
-    //Steuerung der Buttons
     public void actionPerformed(ActionEvent event){
         if (event.getSource() == startGame){
-            setVisible(false);
+            Window[] windows = Window.getWindows();
+            for (Window window : windows) {
+                if (window instanceof JFrame) {
+                    window.dispose();
+                }
+            }
             game();
         }
 

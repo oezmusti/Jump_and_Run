@@ -46,11 +46,14 @@ public class Game extends JPanel implements ActionListener {
     private GameOver gameOver;
     private Blocs blocs1;
     private Blocs blocs2;
+    private Cactus cactusStart;
     private Cactus cactus1;
     private Cactus cactus2;
     private Stone stone1;
     private Stone stone2;
+    private Sting stingStart;
     private Sting sting;
+    private Hole holeStart;
     private Hole hole1;
     private Hole hole2;
     public int playAct = STAY;
@@ -81,11 +84,14 @@ public class Game extends JPanel implements ActionListener {
         gameOver = new GameOver();
         blocs1 = new Blocs();
         blocs2 = new Blocs();
+        cactusStart = new Cactus();
         cactus1 = new Cactus();
         cactus2 = new Cactus();
         stone1 = new Stone();
         stone2 = new Stone();
+        stingStart = new Sting();
         sting = new Sting();
+        holeStart = new Hole();
         hole1 = new Hole();
         hole2 = new Hole();
     }
@@ -110,6 +116,7 @@ public class Game extends JPanel implements ActionListener {
             stingX += 1370;
             System.out.println("bGL 1");
         }
+
         if(xImg >= 960 + (imageNumber2 * 1900)) {
             imageNumber2 += 1;
             nx2 = 0;
@@ -158,6 +165,15 @@ public class Game extends JPanel implements ActionListener {
 
         //System.out.println(player_Y);
         //Objekte
+        g2d.drawImage(cactusStart.elementImage, 500 - nx3, 377, 64, 64, null);
+        cactusStart.updateHitboxPosition (500- nx3, 377);
+        g2d.setColor(Color.RED);
+        g2d.draw(cactusStart.gethitBox());
+
+        g2d.drawImage(stingStart.elementImage, 700 - nx3, 424, 32, 16, null);
+        stingStart.updateHitboxPosition (700- nx3, 424);
+        g2d.setColor(Color.RED);
+        g2d.draw(stingStart.gethitBox());
 
         g2d.drawImage(cactus1.elementImage, cactusX2 - nx, 377, 64, 64, null);
         cactus1.updateHitboxPosition (cactusX2- nx, 377);
@@ -193,6 +209,11 @@ public class Game extends JPanel implements ActionListener {
         blocs2.updateHitboxPosition(960-nx, 440);
         g2d.setColor(Color.ORANGE);
         g2d.draw(blocs2.getHitBox());
+
+        g2d.drawImage(holeStart.elementImage, 950 - nx3, 440, 80, 64, null);
+        holeStart.updateHitboxPosition (950- nx3, 440);
+        g2d.setColor(Color.RED);
+        g2d.draw(holeStart.gethitBox());
 
         g2d.drawImage(hole1.elementImage, holeX2 - nx, 440, 80, 64, null);
         hole1.updateHitboxPosition (holeX2- nx, 440);
@@ -270,7 +291,7 @@ public class Game extends JPanel implements ActionListener {
 
         */
 
-        if (player.getHitbox().intersects(hole1.gethitBox()) || player.getHitbox().intersects(hole2.gethitBox())) {
+        if (player.getHitbox().intersects(hole1.gethitBox()) || player.getHitbox().intersects(hole2.gethitBox()) || player.getHitbox().intersects(holeStart.gethitBox())) {
             //System.out.println("deom CurentScore beträgt:" + curentScore);
             movement.move = 0;
             killObject = hole1.getName();
@@ -281,7 +302,7 @@ public class Game extends JPanel implements ActionListener {
         }
 
         // Überprüfung der Kollision von Hitboxen
-        if (player.getHitbox().intersects(cactus1.gethitBox())) {
+        if (player.getHitbox().intersects(cactus1.gethitBox()) || player.getHitbox().intersects(cactus2.gethitBox()) || player.getHitbox().intersects(cactusStart.gethitBox())) {
             // Game-Fenster schließt sich
             movement.move = 0;
             killObject = cactus1.getName();
@@ -293,7 +314,7 @@ public class Game extends JPanel implements ActionListener {
         }
 
         // Überprüfung der Kollision von Hitboxen
-        if (player.getHitbox().intersects(sting.gethitBox())) {
+        if (player.getHitbox().intersects(sting.gethitBox()) || player.getHitbox().intersects(stingStart.gethitBox())) {
             // Game-Fenster schließt sich
             movement.move = 0;
             killObject = sting.getName();
@@ -304,30 +325,9 @@ public class Game extends JPanel implements ActionListener {
             }
         }
 
-        if (player.getHitbox().intersects(cactus2.gethitBox())) {
-            // Game-Fenster schließt sich
-            movement.move = 0;
-            killObject = cactus2.getName();
-            //System.out.println("deom CurentScore beträgt:" + curentScore);
-            if (!gameOverAngezeigt) {
-                gameOver();
-                gameOverAngezeigt = true;
-            }
-        }
-
-        if (player.getHitbox().intersects(stone1.getHitBox())) {
+        if (player.getHitbox().intersects(stone1.getHitBox()) || player.getHitbox().intersects(stone2.getHitBox())) {
             movement.move = 0;
             killObject = stone1.getName();
-            //System.out.println("deom CurentScore beträgt:" + curentScore);
-            if (!gameOverAngezeigt) {
-                gameOver();
-                gameOverAngezeigt = true;
-            }
-        }
-
-        if (player.getHitbox().intersects(stone2.getHitBox())) {
-            movement.move = 0;
-            killObject = stone2.getName();
             //System.out.println("deom CurentScore beträgt:" + curentScore);
             if (!gameOverAngezeigt) {
                 gameOver();
@@ -381,6 +381,7 @@ public class Game extends JPanel implements ActionListener {
     public int getPlayer_Y(){
         return player_Y;
     }
+
     public int getCurentScore(){
         return curentScore;
     }
@@ -393,6 +394,7 @@ public class Game extends JPanel implements ActionListener {
     }
 
     //Game Over
+    @Deprecated
     private void zeigeGameOverBildschirm() {
         JFrame gameOverFrame = new JFrame("Game Over");
         gameOverFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

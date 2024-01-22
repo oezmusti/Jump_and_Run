@@ -24,7 +24,7 @@ public class GameOver extends JPanel implements ActionListener {
         setFocusable(true);
         importSavedHighScore();
         implementButton();
-        //importElementImage();
+        importElementImage();
     }
 
     public void setScore(int score) {
@@ -36,7 +36,7 @@ public class GameOver extends JPanel implements ActionListener {
     }
 
     public void importElementImage() {
-        InputStream stream = getClass().getClassLoader().getResourceAsStream("assets/Cactus.png");
+        InputStream stream = getClass().getClassLoader().getResourceAsStream("assets/GameOverImage.png");
 
         try {
             if (stream != null) {
@@ -89,7 +89,7 @@ public class GameOver extends JPanel implements ActionListener {
             saveHighScoreToFile();
         }
 
-        g2d.setColor(Color.RED);
+        g2d.setColor(new Color(233, 124, 73));
 
         String scoreText = "Dein Score: " + score;
         String curenthighScoreText = "Dein aktueller Highscore: " + highScore;
@@ -135,7 +135,9 @@ public class GameOver extends JPanel implements ActionListener {
 
         // Buttons positionieren
         exitButton.setLocation(120, 250);
-        restartButton.setLocation(340, 250);
+        exitButton.setSize(100, 40);
+        restartButton.setLocation(320, 250);
+        restartButton.setSize(100, 40);
     }
 
     private void saveHighScoreToFile() {
