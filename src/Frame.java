@@ -27,24 +27,13 @@ public class Frame extends JFrame implements ActionListener {
          * Fensterhöhe 400
          *
          */
-        /*
+
         Frame frame = new Frame("Menü");//Framename
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Damit Exit funktioniert
         frame.setSize(400, 540);
         frame.setLocationRelativeTo(null); //Positionierung des Fensters in der Mitte des Bildschierms
         frame.setLayout(null); //Damit kein Vorgefertigtes Layout angewendet werden kann
         frame.setResizable(false);
-        frame.setVisible(true);
-         */
-
-        JFrame frame = new JFrame("Menü");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //Damit Exit funktioniert
-        frame.setSize(400, 540);
-        frame.setLocationRelativeTo(null); //Positionierung des Fensters in der Mitte des Bildschierms
-        frame.setLayout(null); //Damit kein Vorgefertigtes Layout angewendet werden kann
-        frame.setResizable(false);
-        Frame f = new Frame("Menü");
-        frame.add(f);
         frame.setVisible(true);
     }
 
