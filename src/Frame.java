@@ -92,6 +92,7 @@ public class Frame extends JPanel implements ActionListener {
     * Hier wird durch den ActionListener funktionen ausfgelöst,
     *  die beim Drücken der jeweiligen Schaltföche ausgeführt werden
     */
+    @Override
     public void actionPerformed(ActionEvent event){
         if (event.getSource() == startGame){
             Window[] windows = Window.getWindows();
