@@ -207,7 +207,7 @@ public class GameOver extends JPanel implements ActionListener {
             JFrame game = new JFrame("Jump and Run");
             game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             game.setSize(977, 540);
-            game.setLocationRelativeTo(null); //Positionierung des Fensters in der Mitte
+            game.setLocationRelativeTo(null);
             game.setVisible(true);
             game.setResizable(false);
             game.add(new Game());
