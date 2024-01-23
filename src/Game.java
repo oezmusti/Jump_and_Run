@@ -20,14 +20,11 @@ public class Game extends JPanel implements ActionListener {
     private BufferedImage img;
     private int left;
     private int playerY = 349;
-    private int frames = 0;
-    private long lastCheck = 0;
     private int width = 40;
     public int curentScore;
 
     private Timer time;
     private int xImg;
-    private int move;
     private int nx, nx2;
     public int nx3 = 0;
     private int imageNumber = 0;
@@ -61,7 +58,6 @@ public class Game extends JPanel implements ActionListener {
     public int playAct = STAY;
     private boolean gameOverAngezeigt = false;
     public Game() {
-        move = 0;
         nx = 0;
         nx2 = 960;
 

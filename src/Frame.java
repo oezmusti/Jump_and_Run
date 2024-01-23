@@ -141,7 +141,7 @@ public class Frame extends JPanel implements ActionListener {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
+
         game.setVisible(true);
         game.add(new Game());
 
@@ -162,9 +162,9 @@ public class Frame extends JPanel implements ActionListener {
                                 "<br>" +
                                 "<p style='color: #3498db;'>So wird gespielt:</p>" +
                                 "<br>" +
-                                "<p>Springe über die verschiedenen Hindernisse, <br> sei aber vorischtig und lass dich nicht erwischen.</p>" +
-                                "<p>Auch vor Gruben solltest du dich stqark in Acht nehme, <br> da fällt man leicht runter</p>" +
-                                "<p>Sein Ziel ist es vor dem angedrohten Sturm zu entkommen <br> und dabei so viele Meter zu machen wir möglich</p>" +
+                                "<p>Springe über die verschiedenen Hindernisse, <br> sei aber vorsichtig und lass dich nicht erwischen.</p>" +
+                                "<p>Auch vor Gruben solltest du dich stark in Acht nehmen, <br> da fällt man leicht runter.</p>" +
+                                "<p>Dein Ziel ist es vor dem androhenden Sturm zu entkommen <br> und dabei so viele Meter wie möglich zu machen</p>" +
                                 "<br>" +
                                 "<p>Viel Glück, du wirst es brauchen</p>" +
                             "</body>" +
