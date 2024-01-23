@@ -1,6 +1,5 @@
 
 import Elements.*;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -200,69 +199,69 @@ public class Game extends JPanel implements ActionListener {
         player.updateAniTick();
         g2d.drawImage(player.goForAni[playAct][player.aniIndex], left, playerY, 96, 96, null);
         playerHitBox();
-        g2d.setColor(Color.BLUE);
-        g2d.draw(player.getHitbox());
+        //g2d.setColor(Color.BLUE);
+        //g2d.draw(player.getHitbox());
 
         //Objekte
         g2d.drawImage(cactusStart.getElementImage(), 500 - nx3, 377, 64, 64, null);
         cactusStart.updateHitboxPosition (500- nx3, 377);
-        g2d.setColor(Color.RED);
-        g2d.draw(cactusStart.getHitBox());
+        //g2d.setColor(Color.RED);
+        //g2d.draw(cactusStart.getHitBox());
 
         g2d.drawImage(stingStart.getElementImage(), 700 - nx3, 424, 32, 16, null);
         stingStart.updateHitboxPosition (700- nx3, 424);
-        g2d.setColor(Color.RED);
-        g2d.draw(stingStart.getHitBox());
+        //g2d.setColor(Color.RED);
+        //g2d.draw(stingStart.getHitBox());
 
         g2d.drawImage(cactus1.getElementImage(), cactusX2 - nx, 377, 64, 64, null);
         cactus1.updateHitboxPosition (cactusX2- nx, 377);
-        g2d.setColor(Color.RED);
-        g2d.draw(cactus1.getHitBox());
+        //g2d.setColor(Color.RED);
+        //g2d.draw(cactus1.getHitBox());
 
         g2d.drawImage(sting.getElementImage(), stingX - nx, 424, 32, 16, null);
         sting.updateHitboxPosition (stingX- nx, 424);
-        g2d.setColor(Color.RED);
-        g2d.draw(sting.getHitBox());
+        //g2d.setColor(Color.RED);
+        //g2d.draw(sting.getHitBox());
 
         g2d.drawImage(stone1.getElementImage(), stoneX2 - nx, 377, 64, 64, null);
         stone1.updateHitboxPosition (stoneX2- nx, 377);
-        g2d.setColor(Color.RED);
-        g2d.draw(stone1.getHitBox());
+        //g2d.setColor(Color.RED);
+        //g2d.draw(stone1.getHitBox());
 
         g2d.drawImage(stone2.getElementImage(), stoneX - nx2, 377, 64, 64, null);
         stone2.updateHitboxPosition (stoneX- nx2, 377);
-        g2d.setColor(Color.RED);
-        g2d.draw(stone2.getHitBox());
+        //g2d.setColor(Color.RED);
+        //g2d.draw(stone2.getHitBox());
 
         g2d.drawImage(cactus2.getElementImage(), cactusX - nx2, 377, 64, 64, null);
         cactus2.updateHitboxPosition (cactusX- nx2, 377);
-        g2d.setColor(Color.RED);
-        g2d.draw(cactus2.getHitBox());
+        //g2d.setColor(Color.RED);
+        //g2d.draw(cactus2.getHitBox());
 
         g2d.drawImage(blocs1.getElementImage(), 960-nx2, 440, 960, 64, null);
         blocs1.updateHitboxPosition(960-nx2, 440);
-        g2d.setColor(Color.ORANGE);
-        g2d.draw(blocs1.getHitBox());
+        //g2d.setColor(Color.ORANGE);
+        //g2d.draw(blocs1.getHitBox());
 
         g2d.drawImage(blocs2.getElementImage(), 960-nx, 440, 960, 64, null);
         blocs2.updateHitboxPosition(960-nx, 440);
-        g2d.setColor(Color.ORANGE);
-        g2d.draw(blocs2.getHitBox());
+        //g2d.setColor(Color.ORANGE);
+        //g2d.draw(blocs2.getHitBox());
 
         g2d.drawImage(holeStart.getElementImage(), 950 - nx3, 440, 80, 64, null);
         holeStart.updateHitboxPosition (950- nx3, 440);
-        g2d.setColor(Color.RED);
-        g2d.draw(holeStart.getHitBox());
+        //g2d.setColor(Color.RED);
+        //g2d.draw(holeStart.getHitBox());
 
         g2d.drawImage(hole1.getElementImage(), holeX2 - nx, 440, 80, 64, null);
         hole1.updateHitboxPosition (holeX2- nx, 440);
-        g2d.setColor(Color.RED);
-        g2d.draw(hole1.getHitBox());
+        //g2d.setColor(Color.RED);
+        //g2d.draw(hole1.getHitBox());
 
         g2d.drawImage(hole2.getElementImage(), holeX1 - nx2, 440, 80, 64, null);
         hole2.updateHitboxPosition (holeX1 - nx2, 440);
-        g2d.setColor(Color.RED);
-        g2d.draw(hole2.getHitBox());
+        //g2d.setColor(Color.RED);
+        //g2d.draw(hole2.getHitBox());
 
         curentScore =  nx3/20;
 
@@ -326,7 +325,21 @@ public class Game extends JPanel implements ActionListener {
         }
 
         if(event.getSource() == resetButton){
-            resetGame();
+            Window[] windows = Window.getWindows();
+            for (Window window : windows) {
+                if (window instanceof JFrame) {
+                    window.dispose();
+                }
+            }
+
+            JFrame game = new JFrame("Jump and Run");
+            game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            game.setSize(977, 540);
+            game.setLocationRelativeTo(null); //Positionierung des Fensters in der Mitte
+            game.setVisible(true);
+            game.setResizable(false);
+            game.add(new Game());
+
         }
     }
 

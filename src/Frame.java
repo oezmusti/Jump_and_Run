@@ -131,8 +131,18 @@ public class Frame extends JPanel implements ActionListener {
         game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         game.setSize(977, 540);
         game.setLocationRelativeTo(null); //Positionierung des Fenseters in der Mitte
-        game.setVisible(true);
         game.setResizable(false);
+
+        // Icon-Bild laden
+        try {
+            BufferedImage iconImage = ImageIO.read(Main.class.getResource("assets/Icon.png"));
+            // Setze das Icon für das JFrame
+            game.setIconImage(iconImage);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
+        game.setVisible(true);
         game.add(new Game());
 
     }

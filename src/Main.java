@@ -1,5 +1,7 @@
-
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 /**
  * Storm Runner
@@ -24,6 +26,16 @@ public class Main extends JFrame {
 
         Frame frame = new Frame();
         //gameOverPanel.importElementImage();
+
+        // Icon-Bild laden
+        try {
+            BufferedImage iconImage = ImageIO.read(Main.class.getResource("assets/Icon.png"));
+            // Setze das Icon für das JFrame
+            startframe.setIconImage(iconImage);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         startframe.add(frame);
         startframe.setVisible(true);
     }

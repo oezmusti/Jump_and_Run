@@ -204,14 +204,6 @@ public class GameOver extends JPanel implements ActionListener {
                 }
             }
 
-            try {
-                String java = System.getProperty("java.home") + "/bin/java";
-                ProcessBuilder builder = new ProcessBuilder(java, "-jar", "DeinSpiel.jar");
-                builder.start();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
             JFrame game = new JFrame("Jump and Run");
             game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             game.setSize(977, 540);
