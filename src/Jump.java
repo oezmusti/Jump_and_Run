@@ -6,6 +6,9 @@ public class Jump extends Thread{
     static int jumpPosition = basepointY;
     public int jumpTime;
 
+    /**
+     * Einbau eines Threads um gleichzeitige Aktionen ausführen zu können
+     */
     public void run(){
         finished = false;
         jumpTime = 1;
@@ -20,6 +23,9 @@ public class Jump extends Thread{
         highstPoint = false;
     }
 
+    /**
+     * Ausführung eines Spungs mit Animation
+     */
     public void doJump(){
         if(highstPoint == false){
             jumpPosition--;

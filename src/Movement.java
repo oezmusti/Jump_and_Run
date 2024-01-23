@@ -1,14 +1,20 @@
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-
 import static util.PlaayerConst.PlayerMovings.*;
 
+/**
+ * Erstellung der Movement Klasse, welche von der KeyAdapter Klasse erbt
+ */
 public class Movement extends KeyAdapter {
-
     public int move;
     private Game game;
     private Player player = new Player();
 
+    /**
+     * Prüfen auf tasteneingabe
+     *
+     * @param e Eventeingabe
+     */
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
 
@@ -37,6 +43,11 @@ public class Movement extends KeyAdapter {
         }
     }
 
+    /**
+     * Prüfen ob Taste losgelassen wurde
+     *
+     * @param e Eventeingabe
+     */
     public void keyReleased(KeyEvent e) {
         int key = e.getKeyCode();
 
@@ -52,6 +63,9 @@ public class Movement extends KeyAdapter {
         }
     }
 
+    /**
+     * Implementierung von einem Sprung
+     */
     public void performJump(){
         Jump jumpanimation = new Jump();
         jumpanimation.start();

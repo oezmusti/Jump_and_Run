@@ -11,8 +11,11 @@ public class Player {
     public int aniSpeed = 1000;
     public BufferedImage[][] goForAni;
     private int playAct = STAY;
-    private Game game;
     private Rectangle hitbox;
+
+    /**
+     * Importieren des erforderlichen Bildes
+     */
     public void importPlayerImg() {
 
         InputStream stream = getClass().getClassLoader().getResourceAsStream("assets/Character.png");
@@ -34,12 +37,21 @@ public class Player {
         }
     }
 
+    /**
+     * Updaten der Hitbox des Spielers beim bewegen
+     *
+     * @param x
+     * @param y
+     * @param width
+     */
     public void updateHitboxPosition(int x, int y, int width) {
-        // Aktualisiere die Position der Hitbox basierend auf der Position des Spielers
         hitbox.setLocation(x+25, y+25);
         hitbox.setSize(width, 67);
     }
 
+    /**
+     * Ausführung der Animation, iteration
+     */
     public void animation(){
         goForAni = new BufferedImage[4][4];
 
@@ -50,6 +62,9 @@ public class Player {
         }
     }
 
+    /**
+     * Dauerausführung der Animation für den Spieler
+     */
     public void updateAniTick(){
         aniTicker++;
         if(aniTicker >= aniSpeed){
@@ -65,6 +80,7 @@ public class Player {
     public BufferedImage getPlayerImg() {
         return playerImg;
     }
+
 
     public Rectangle getHitbox() {
         return hitbox;

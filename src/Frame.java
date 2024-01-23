@@ -7,7 +7,10 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 
-
+/**
+ * Menüfenster
+ * Erstellen des Frame Klasse, welches von JPanel erbt und das Interface ActionListener besitzt
+ * */
 public class Frame extends JPanel implements ActionListener {
 
     private JButton startGame;
@@ -15,14 +18,7 @@ public class Frame extends JPanel implements ActionListener {
     private JButton finish;
     private BufferedImage backgroundImage;
 
-    /*
-     *Frameinhalte
-     *
-     * Hier wrden die Frameinhalte für das Startfenster definiert.
-     * Zurzeiit bestehe diese aus 3 Schasltflächen.
-     * Unter andeem werden hier die Positionen und die Propositionen definiert.
-     *
-     */
+
     public Frame(){
         setFocusable(true);
         importBackgroudImg();
@@ -30,6 +26,9 @@ public class Frame extends JPanel implements ActionListener {
 
     }
 
+    /**
+     * Imporierung des Hintergrundbildes für das Menü
+     * */
     public void importBackgroudImg() {
         InputStream stream = getClass().getClassLoader().getResourceAsStream("assets/Start.png");
         try {
@@ -49,6 +48,14 @@ public class Frame extends JPanel implements ActionListener {
         }
     }
 
+    /**
+     * Zeichnung der Elemente, die im Fenster angezeigt werden
+     *
+     * Zeichnen des Hintergrundbildes
+     * Setzen der Buttons an die richtige Position
+     *
+     * @param g Zugriff auf die zeichnen Komponente
+     * */
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g); // First, draw the background of the parent class
@@ -64,6 +71,9 @@ public class Frame extends JPanel implements ActionListener {
 
     }
 
+    /**
+     * Erstellung der Buttons und dessen Eigenschaften
+     * */
     private void importJButtons() {
         startGame = new JButton("Starten");
         startGame.setBounds(120, 170, 160, 40);
@@ -87,10 +97,9 @@ public class Frame extends JPanel implements ActionListener {
     }
 
     /*
-    *Buttonfunktionen
+    * Implementierung des actionPerformed
+    * Setzung der Funktionalitäten für die einzelnen Buttons
     *
-    * Hier wird durch den ActionListener funktionen ausfgelöst,
-    *  die beim Drücken der jeweiligen Schaltföche ausgeführt werden
     */
     @Override
     public void actionPerformed(ActionEvent event){
@@ -115,10 +124,7 @@ public class Frame extends JPanel implements ActionListener {
     }
 
     /*
-     * Initialisierung des Spielfensters
-     *
-     * Hier werden die Daten f+r das Spielfenster festgelegt.
-     * Ansschließend wird durch die game.add(new Game()); das Spiel geladen
+     * Erstellung eines neuen Game Fensters
      */
     public static void game(){
         JFrame game = new JFrame("Jump and Run");
@@ -131,6 +137,9 @@ public class Frame extends JPanel implements ActionListener {
 
     }
 
+    /**
+     * Erstellung einer Infokarte für Steuerung und Spielziel
+     * */
     public static void control(){
          String message = "<html>" +
                             "<body style='margin:15px; font-size:12px;'>" +

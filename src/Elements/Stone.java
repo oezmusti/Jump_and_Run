@@ -6,10 +6,17 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * Kreieren einer Stone Klasse welches von Element erbt
+ */
 public class Stone extends Element{
     private String name = "Stein";
     private Rectangle hitBox;
-    public BufferedImage elementImage;
+    private BufferedImage elementImage;
+
+    /**
+     * Importieren des erforderlichen Bildes
+     */
     @Override
     public void importElementImage() {
         InputStream stream = getClass().getClassLoader().getResourceAsStream("assets/grauerStein.png");
@@ -31,6 +38,12 @@ public class Stone extends Element{
         }
     }
 
+    /**
+     * Updaten der Hitbox für jedes Objekt
+     *
+     * @param x Übergabe der X-Koordinate
+     * @param y Üvergabe der Y-Koordinate
+     * */
     @Override
     public void updateHitboxPosition(int x, int y) {
         // Aktualisiere die Position der Hitbox basierend auf der Position des Spielers

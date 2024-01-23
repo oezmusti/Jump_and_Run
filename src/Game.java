@@ -1,20 +1,26 @@
+
 import Elements.*;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Random;
-
 import static util.PlaayerConst.PlayerMovings.*;
 
+/**
+ * Gamefenster
+ * Erstellen der Game Klasse, welches von JPanel erbt und das Interface ActionListener besitzt
+ * */
 public class Game extends JPanel implements ActionListener {
 
-    //Variablen
-    private Image img;
-    //private Image playerImg;
+    private BufferedImage img;
     private int left;
-    private int player_Y = 349;
+    private int playerY = 349;
     private int frames = 0;
     private long lastCheck = 0;
     private int width = 40;
@@ -36,10 +42,7 @@ public class Game extends JPanel implements ActionListener {
     private int stoneX2 = 1560;
     private int holeX2 = 1810;
     private String killObject;
-    //Randomizer
     Random rand = new Random();
-
-    //Assosiations
     private Movement movement;;
     private Jump jump;
     private Player player;
@@ -77,6 +80,9 @@ public class Game extends JPanel implements ActionListener {
         add(resetButton);
     }
 
+    /**
+     * Initialisierung der Klassenatrebute
+     * */
     private void initClass() {
         movement = new Movement(this);
         jump = new Jump();
@@ -96,12 +102,33 @@ public class Game extends JPanel implements ActionListener {
         hole2 = new Hole();
     }
 
+
+    /**
+     * Import des Hintergrundbildes
+     */
     private void importBackgroundImg() {
-        ImageIcon image = new ImageIcon("src\\assets\\Hintergrund.png");
-        img = image.getImage();
-        setPreferredSize(new Dimension(800, 600));
+        InputStream stream = getClass().getClassLoader().getResourceAsStream("assets/Hintergrund.png");
+
+        try {
+            if (stream != null) {
+                img = ImageIO.read(stream);
+            } else {
+                System.err.println("Bild nicht gefunden: assets/Cactus-stehend.png");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                stream.close();
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+        }
     }
 
+    /**
+     * Erstellung des Backgroundloops
+     */
     private void backgroundLoop() {
         if(xImg >= 1920 + (imageNumber * 1900)) {
             imageNumber += 1;
@@ -130,6 +157,10 @@ public class Game extends JPanel implements ActionListener {
         }
     }
 
+
+    /**
+     * Playerhitbox vergrößerung oder verkleinerung je nach Position
+     */
     private void playerHitBox() {
         if(playAct == RUNNING_BACKWARD){
             width = 50;
@@ -137,162 +168,128 @@ public class Game extends JPanel implements ActionListener {
         if(playAct == RUNNING_FORWARD){
             width = 40;
         }
-        player.updateHitboxPosition(left, player_Y, width);
+        player.updateHitboxPosition(left, playerY, width);
     }
 
+    /**
+     * Zeichnen aller Elemente für das Spielfenster
+     * Zeichnen des Backgrounds
+     * Anzeige des Scores
+     * import Player
+     * import der Eleemente
+     * Zählen der erlangten Reichweite
+     * Neuzeichnen
+     *
+     * @param graphic the <code>Graphics</code> object to protect
+     */
     protected void paintComponent(Graphics graphic) {
         super.paintComponent(graphic);
         Graphics2D g2d = (Graphics2D) graphic;
         backgroundLoop();
 
-        // Zeichne den Hintergrund
+        // Zeichnen des Hintergrunds
         g2d.drawImage(img, 960 - nx, 0, getWidth(), getHeight(), this);
         g2d.drawImage(img, 960 - nx2, 0, getWidth(), getHeight(), this);
 
-        //Counter Anzeige
+        //Score Anzeige
         g2d.setFont(new Font("TimesRoman", Font.PLAIN, 20));
         g2d.setColor(Color.RED);
         g2d.drawString("Score: " + curentScore, 10, 25);
 
-        //Zeichne den Spieler
+        //Player importieren
         player.updateAniTick();
-
-        g2d.drawImage(player.goForAni[playAct][player.aniIndex], left, player_Y, 96, 96, null);
-        //System.out.println("Player width: " + width);
+        g2d.drawImage(player.goForAni[playAct][player.aniIndex], left, playerY, 96, 96, null);
         playerHitBox();
         g2d.setColor(Color.BLUE);
         g2d.draw(player.getHitbox());
 
-        //System.out.println(player_Y);
         //Objekte
-        g2d.drawImage(cactusStart.elementImage, 500 - nx3, 377, 64, 64, null);
+        g2d.drawImage(cactusStart.getElementImage(), 500 - nx3, 377, 64, 64, null);
         cactusStart.updateHitboxPosition (500- nx3, 377);
         g2d.setColor(Color.RED);
-        g2d.draw(cactusStart.gethitBox());
+        g2d.draw(cactusStart.getHitBox());
 
-        g2d.drawImage(stingStart.elementImage, 700 - nx3, 424, 32, 16, null);
+        g2d.drawImage(stingStart.getElementImage(), 700 - nx3, 424, 32, 16, null);
         stingStart.updateHitboxPosition (700- nx3, 424);
         g2d.setColor(Color.RED);
-        g2d.draw(stingStart.gethitBox());
+        g2d.draw(stingStart.getHitBox());
 
-        g2d.drawImage(cactus1.elementImage, cactusX2 - nx, 377, 64, 64, null);
+        g2d.drawImage(cactus1.getElementImage(), cactusX2 - nx, 377, 64, 64, null);
         cactus1.updateHitboxPosition (cactusX2- nx, 377);
         g2d.setColor(Color.RED);
-        g2d.draw(cactus1.gethitBox());
+        g2d.draw(cactus1.getHitBox());
 
-        g2d.drawImage(sting.elementImage, stingX - nx, 424, 32, 16, null);
+        g2d.drawImage(sting.getElementImage(), stingX - nx, 424, 32, 16, null);
         sting.updateHitboxPosition (stingX- nx, 424);
         g2d.setColor(Color.RED);
-        g2d.draw(sting.gethitBox());
+        g2d.draw(sting.getHitBox());
 
-        g2d.drawImage(stone1.elementImage, stoneX2 - nx, 377, 64, 64, null);
+        g2d.drawImage(stone1.getElementImage(), stoneX2 - nx, 377, 64, 64, null);
         stone1.updateHitboxPosition (stoneX2- nx, 377);
         g2d.setColor(Color.RED);
         g2d.draw(stone1.getHitBox());
 
-        g2d.drawImage(stone2.elementImage, stoneX - nx2, 377, 64, 64, null);
+        g2d.drawImage(stone2.getElementImage(), stoneX - nx2, 377, 64, 64, null);
         stone2.updateHitboxPosition (stoneX- nx2, 377);
         g2d.setColor(Color.RED);
         g2d.draw(stone2.getHitBox());
 
-        g2d.drawImage(cactus2.elementImage, cactusX - nx2, 377, 64, 64, null);
+        g2d.drawImage(cactus2.getElementImage(), cactusX - nx2, 377, 64, 64, null);
         cactus2.updateHitboxPosition (cactusX- nx2, 377);
         g2d.setColor(Color.RED);
-        g2d.draw(cactus2.gethitBox());
+        g2d.draw(cactus2.getHitBox());
 
-        g2d.drawImage(blocs1.elementImage, 960-nx2, 440, 960, 64, null);
+        g2d.drawImage(blocs1.getElementImage(), 960-nx2, 440, 960, 64, null);
         blocs1.updateHitboxPosition(960-nx2, 440);
         g2d.setColor(Color.ORANGE);
         g2d.draw(blocs1.getHitBox());
 
-        g2d.drawImage(blocs2.elementImage, 960-nx, 440, 960, 64, null);
+        g2d.drawImage(blocs2.getElementImage(), 960-nx, 440, 960, 64, null);
         blocs2.updateHitboxPosition(960-nx, 440);
         g2d.setColor(Color.ORANGE);
         g2d.draw(blocs2.getHitBox());
 
-        g2d.drawImage(holeStart.elementImage, 950 - nx3, 440, 80, 64, null);
+        g2d.drawImage(holeStart.getElementImage(), 950 - nx3, 440, 80, 64, null);
         holeStart.updateHitboxPosition (950- nx3, 440);
         g2d.setColor(Color.RED);
-        g2d.draw(holeStart.gethitBox());
+        g2d.draw(holeStart.getHitBox());
 
-        g2d.drawImage(hole1.elementImage, holeX2 - nx, 440, 80, 64, null);
+        g2d.drawImage(hole1.getElementImage(), holeX2 - nx, 440, 80, 64, null);
         hole1.updateHitboxPosition (holeX2- nx, 440);
         g2d.setColor(Color.RED);
-        g2d.draw(hole1.gethitBox());
+        g2d.draw(hole1.getHitBox());
 
-        g2d.drawImage(hole2.elementImage, holeX1 - nx2, 440, 80, 64, null);
+        g2d.drawImage(hole2.getElementImage(), holeX1 - nx2, 440, 80, 64, null);
         hole2.updateHitboxPosition (holeX1 - nx2, 440);
         g2d.setColor(Color.RED);
-        g2d.draw(hole2.gethitBox());
-        /*
-        g2d.drawImage(cactus1.elementImage, enemyStartCactus-nx3, 377, 64, 64, null);
-        this.cactus1.updateHitboxPosition(enemyStartCactus-nx3, 377);
-        g2d.setColor(Color.RED);
-        g2d.draw(cactus1.gethitBox());
+        g2d.draw(hole2.getHitBox());
 
-        g2d.drawImage(cactus2.elementImage, (enemyStartCactus+random)-nx3, 377, 64, 64, null);
-        this.cactus2.updateHitboxPosition((enemyStartCactus+random)-nx3, 377);
-        g2d.setColor(Color.RED);
-        g2d.draw(cactus2.gethitBox());
-
-        g2d.drawImage(cactus3.elementImage, (enemyStartCactus+random+200)-nx3, 377, 64, 64, null);
-        this.cactus3.updateHitboxPosition((enemyStartCactus+random+200)-nx3, 377);
-        g2d.setColor(Color.RED);
-        g2d.draw(cactus3.gethitBox());
-
-        g2d.drawImage(blocs.elementImage, 0-nx3, 440, 64, 64, null);
-        blocs.updateHitboxPosition(0-nx3, 440);
-        g2d.setColor(Color.ORANGE);
-        g2d.draw(blocs.getHitBox());
-         */
-
-        //System.out.println(curentScore);
         curentScore =  nx3/20;
 
-        //fpsCounter();
         repaint();
     }
 
 
+    /**
+     * Setzen eines Timersfür für die actionPerformed Methode
+     */
     private void timerRestart() {
         time = new Timer(15, this);
         time.start();
     }
 
+    /**
+     *  Implementierung des actionPerformed
+     *  Übermittlung des Playerzstandes
+     *  Gleichsetzen von playerY mit jump.jumpPosition
+     */
     @Override
     public void actionPerformed(ActionEvent event) {
-        //repaint();
         player.setPlayAct(playAct);
-        player_Y = jump.jumpPosition;
+        playerY = jump.jumpPosition;
         backgroundLimit();
 
-       /*
-       if(player.getHitbox().intersects(blocs1.getHitBox()) || player.getHitbox().intersects(blocs2.getHitBox())){
-           System.out.println("Kein GameOver");
-       }
-       else {
-           if (player_Y < 349) {
-               System.out.println("Kein GameOver");
-           } else if (player_Y == 349 && (player.getHitbox().intersects(blocs1.getHitBox()) || player.getHitbox().intersects(blocs2.getHitBox()))) {
-               System.out.println("Kein GameOver");
-           } else if (!(player.getHitbox().intersects(blocs1.getHitBox()) && player.getHitbox().intersects(blocs2.getHitBox())) && player_Y <= 349) {
-               System.out.println("Das ist das andere GameOver");
-           } else if (player_Y > 349 && player.getHitbox().intersects(blocs1.getHitBox()) && player.getHitbox().intersects(blocs2.getHitBox())) {
-               System.out.println("Kein GameOver");
-           } else {
-               System.out.println("Das ist nicht nur GameOver sondern mehr GameOver");
-               movement.move = 0;
-               if (!gameOverAngezeigt) {
-                   gameOver();
-                   gameOverAngezeigt = true;
-                }
-            }
-         }
-
-        */
-
-        if (player.getHitbox().intersects(hole1.gethitBox()) || player.getHitbox().intersects(hole2.gethitBox()) || player.getHitbox().intersects(holeStart.gethitBox())) {
-            //System.out.println("deom CurentScore beträgt:" + curentScore);
+        if (player.getHitbox().intersects(hole1.getHitBox()) || player.getHitbox().intersects(hole2.getHitBox()) || player.getHitbox().intersects(holeStart.getHitBox())) {
             movement.move = 0;
             killObject = hole1.getName();
             if (!gameOverAngezeigt) {
@@ -301,24 +298,18 @@ public class Game extends JPanel implements ActionListener {
             }
         }
 
-        // Überprüfung der Kollision von Hitboxen
-        if (player.getHitbox().intersects(cactus1.gethitBox()) || player.getHitbox().intersects(cactus2.gethitBox()) || player.getHitbox().intersects(cactusStart.gethitBox())) {
-            // Game-Fenster schließt sich
+        if (player.getHitbox().intersects(cactus1.getHitBox()) || player.getHitbox().intersects(cactus2.getHitBox()) || player.getHitbox().intersects(cactusStart.getHitBox())) {
             movement.move = 0;
             killObject = cactus1.getName();
-            //System.out.println("deom CurentScore beträgt:" + curentScore);
             if (!gameOverAngezeigt) {
                 gameOver();
                 gameOverAngezeigt = true;
             }
         }
 
-        // Überprüfung der Kollision von Hitboxen
-        if (player.getHitbox().intersects(sting.gethitBox()) || player.getHitbox().intersects(stingStart.gethitBox())) {
-            // Game-Fenster schließt sich
+        if (player.getHitbox().intersects(sting.getHitBox()) || player.getHitbox().intersects(stingStart.getHitBox())) {
             movement.move = 0;
             killObject = sting.getName();
-            //System.out.println("deom CurentScore beträgt:" + curentScore);
             if (!gameOverAngezeigt) {
                 gameOver();
                 gameOverAngezeigt = true;
@@ -328,7 +319,6 @@ public class Game extends JPanel implements ActionListener {
         if (player.getHitbox().intersects(stone1.getHitBox()) || player.getHitbox().intersects(stone2.getHitBox())) {
             movement.move = 0;
             killObject = stone1.getName();
-            //System.out.println("deom CurentScore beträgt:" + curentScore);
             if (!gameOverAngezeigt) {
                 gameOver();
                 gameOverAngezeigt = true;
@@ -340,8 +330,11 @@ public class Game extends JPanel implements ActionListener {
         }
     }
 
+    /**
+     * Der Hintergrund wird erst ab 400px nach hinten bewegt
+     * Verhindern, dass der Spieler endlos nach hinten läuft kann
+     */
     public void backgroundLimit() {
-        //Damit der Spieler nicht wieder endlos nach Hinten laufen kann
         if(movement.move != -5){
             if(left + movement.move <= 400){
                 left += movement.move;
@@ -360,16 +353,6 @@ public class Game extends JPanel implements ActionListener {
         }
     }
 
-    private void fpsCounter() {
-        frames++;
-        if(System.currentTimeMillis() - lastCheck >= 1000){
-            lastCheck = System.currentTimeMillis();
-            System.out.println("FPS:" + frames);
-            frames = 0;
-        }
-    }
-
-    //Bleibt fürs erste
     public void setPlayAct(int playAct){
         this.playAct = playAct;
     }
@@ -378,32 +361,27 @@ public class Game extends JPanel implements ActionListener {
         return left;
     }
 
-    public int getPlayer_Y(){
-        return player_Y;
+    public int getPlayerY(){
+        return playerY;
     }
 
     public int getCurentScore(){
         return curentScore;
     }
 
-    //Funktion die den Reset ausführen soll
+
+    /**
+     * Neustart des Games
+     */
     private void resetGame() {
         // Reset game logic goes here
         //Frame.game();
         gameOver();
     }
 
-    //Game Over
-    @Deprecated
-    private void zeigeGameOverBildschirm() {
-        JFrame gameOverFrame = new JFrame("Game Over");
-        gameOverFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        gameOverFrame.setSize(540, 440);
-        gameOverFrame.setLocationRelativeTo(null); // Positionierung des Fenseters in der Mitte
-        gameOverFrame.setVisible(true);
-        gameOverFrame.setResizable(false);
-    }
-
+    /**
+     * Erstellen eines neuen GameOver Fensters beim Aufruf der Funktion gameOver();
+     */
     public void gameOver() {
         JFrame gameOverFrame = new JFrame("Game Over");
         gameOverFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -413,7 +391,6 @@ public class Game extends JPanel implements ActionListener {
         gameOverFrame.setUndecorated(true);
 
         GameOver gameOverPanel = new GameOver();
-        //gameOverPanel.importElementImage();
         gameOverPanel.setScore(curentScore);
         gameOverPanel.setKillObject(killObject);
         gameOverFrame.add(gameOverPanel);

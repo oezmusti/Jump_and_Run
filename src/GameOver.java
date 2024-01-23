@@ -12,6 +12,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Scanner;
 
+/**
+ * Erstellung der GameOver Klasse, welches vom JPanel erbt und das Interface ActionListener besitzt
+ */
 public class GameOver extends JPanel implements ActionListener {
     private JButton exitButton;
     private JButton restartButton;
@@ -35,6 +38,9 @@ public class GameOver extends JPanel implements ActionListener {
         this.killObject = KO;
     }
 
+    /**
+     * Import des Hintergrundbildes
+     */
     public void importElementImage() {
         InputStream stream = getClass().getClassLoader().getResourceAsStream("assets/GameOverImage.png");
 
@@ -55,6 +61,9 @@ public class GameOver extends JPanel implements ActionListener {
         }
     }
 
+    /**
+     * Importierung des gespeicherten Highscores aus der HighScore.txt
+     */
     public void importSavedHighScore(){
         File datei = new File("src/HighScore.txt");
         System.out.println(datei.isFile());
@@ -74,6 +83,15 @@ public class GameOver extends JPanel implements ActionListener {
         }
     }
 
+    /**
+     * Zeichnen aller Elemente für das Spielfenster
+     * Zeichnen des Hintergrundbildes
+     * prüfen ob Score größer als Highscore ist und gegebenenfalls saveHighScoreToFile(); aufrufen
+     *Text anzeige von Score, Highscore und Todesgrund
+     * Anzeige der beiden Buttons
+     *
+     * @param g the <code>Graphics</code> object to protect
+     */
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
@@ -89,7 +107,7 @@ public class GameOver extends JPanel implements ActionListener {
             saveHighScoreToFile();
         }
 
-        g2d.setColor(new Color(233, 124, 73));
+        g2d.setColor(new Color(0000000));
 
         String scoreText = "Dein Score: " + score;
         String curenthighScoreText = "Dein aktueller Highscore: " + highScore;
@@ -115,12 +133,12 @@ public class GameOver extends JPanel implements ActionListener {
 
         String messageText = (score < highScore) ? "Versuch's nächstes Mal!" : "Neuer Highscore: " + highScore;
 
-        // Setze die Schriftgröße auf 30 Pixel für den Text "Game Over"
+        // die Schriftgröße auf 30 Pixel für den Text "Game Over"
         g2d.setFont(new Font("TimesRoman", Font.PLAIN, 30));
         int xGameOver = (getWidth() - g2d.getFontMetrics().stringWidth("Game Over")) / 2;
         g2d.drawString("Game Over", xGameOver, 50);
 
-        // Setze die Schriftgröße auf 20 Pixel für den restlichen Text
+        // die Schriftgröße auf 20 Pixel für den restlichen Text
         g2d.setFont(new Font("TimesRoman", Font.PLAIN, 20));
         int xScore = (getWidth() - g2d.getFontMetrics().stringWidth(scoreText)) / 2;
         int xCurentHighScore = (getWidth() - g2d.getFontMetrics().stringWidth(curenthighScoreText)) / 2;
@@ -140,6 +158,9 @@ public class GameOver extends JPanel implements ActionListener {
         restartButton.setSize(100, 40);
     }
 
+    /**
+     * Speichern des neuen Highscores
+     */
     private void saveHighScoreToFile() {
         File datei = new File("src/HighScore.txt");
         try {
@@ -149,21 +170,26 @@ public class GameOver extends JPanel implements ActionListener {
         }
     }
 
+    /**
+     * Erstellung der Buttons
+     */
     private void implementButton() {
         exitButton = new JButton("Beenden");
-        exitButton.setBounds(120, 560, 200, 80);  // Adjusted height to avoid overlapping
+        exitButton.setBounds(120, 560, 200, 80);
         exitButton.addActionListener(this);
         exitButton.setVisible(true);
         add(exitButton);
 
         restartButton = new JButton("Reset");
-        restartButton.setBounds(340, 560, 200, 80);  // Adjusted X-coordinate to avoid overlapping
+        restartButton.setBounds(340, 560, 200, 80);
         restartButton.addActionListener(this);
         restartButton.setVisible(true);
         add(restartButton);
     }
 
-
+    /**
+     * Überprüfung ob ein Button gecklickt worden ist, ausüben des entsprechenden Codeblocks
+     */
     @Override
     public void actionPerformed(ActionEvent event) {
         if (event.getSource() == exitButton) {
@@ -171,7 +197,6 @@ public class GameOver extends JPanel implements ActionListener {
         }
 
         if (event.getSource() == restartButton) {
-            // Schließe alle vorhandenen Fenster
             Window[] windows = Window.getWindows();
             for (Window window : windows) {
                 if (window instanceof JFrame) {
@@ -179,7 +204,6 @@ public class GameOver extends JPanel implements ActionListener {
                 }
             }
 
-            // Beende den aktuellen JVM-Prozess und starte einen neuen
             try {
                 String java = System.getProperty("java.home") + "/bin/java";
                 ProcessBuilder builder = new ProcessBuilder(java, "-jar", "DeinSpiel.jar");
@@ -188,7 +212,6 @@ public class GameOver extends JPanel implements ActionListener {
                 e.printStackTrace();
             }
 
-            // Öffne das neue Spiel-Fenster
             JFrame game = new JFrame("Jump and Run");
             game.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             game.setSize(977, 540);

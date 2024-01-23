@@ -6,12 +6,18 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 
+/**
+ * Kreieren einer Cactus Klasse welches von Element erbt
+ */
 public class Cactus extends Element{
 
     private String name = "Kaktus";
     private Rectangle hitBox;
-    public BufferedImage elementImage;
+    private BufferedImage elementImage;
 
+    /**
+     * Importieren des erforderlichen Bildes
+     */
     @Override
     public void importElementImage() {
         InputStream stream = getClass().getClassLoader().getResourceAsStream("assets/Cactus.png");
@@ -33,6 +39,12 @@ public class Cactus extends Element{
         }
     }
 
+    /**
+     * Updaten der Hitbox für jedes Objekt
+     *
+     * @param x Übergabe der X-Koordinate
+     * @param y Üvergabe der Y-Koordinate
+     * */
     @Override
     public void updateHitboxPosition(int x, int y) {
         // Aktualisiere die Position der Hitbox basierend auf der Position des Spielers
@@ -43,7 +55,7 @@ public class Cactus extends Element{
         return name;
     }
 
-    public Rectangle gethitBox(){
+    public Rectangle getHitBox(){
         return hitBox;
     }
     public BufferedImage getElementImage(){
